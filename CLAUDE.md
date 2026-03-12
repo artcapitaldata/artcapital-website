@@ -6,7 +6,7 @@ It provides market data, analytics, and performance indices for contemporary art
 
 ## Tech Stack
 - **Framework**: Next.js 14+ with TypeScript, App Router
-- **Styling**: Tailwind CSS (dark theme: brand-950 navy + accent gold #C9A84C)
+- **Styling**: Tailwind CSS (light editorial theme inspired by WSJ/FT — see Design System below)
 - **Database**: Supabase (PostgreSQL) with Row Level Security
 - **Hosting**: Vercel (Hobby plan, team: art-capitals-projects)
 - **Newsletter**: Beehiiv (to be configured)
@@ -50,10 +50,67 @@ supabase/
 6. **newsletter_issues** - Newsletter archive
 7. **profiles** - User profiles extending Supabase Auth
 
-## Design System
-- **Colors**: Navy dark theme (brand-50 to brand-950), Gold accent (#C9A84C)
-- **Fonts**: Inter (body), Playfair Display (headings), JetBrains Mono (numbers)
-- **Components**: .card, .card-hover, .badge-buy, .badge-hold, .badge-caution, .btn-primary, .btn-secondary
+## Design System — Editorial Elegance
+
+### Vision
+Art Capital deve trasmettere **autorevolezza, ricchezza e sobrietà** — come il Wall Street Journal o il Financial Times applicati al mondo dell'arte. Il sito deve sembrare progettato da un team di design di alto livello, non da uno sviluppatore.
+
+### Principi di Design
+
+1. **Sobrietà prima di tutto** — Nessun effetto appariscente, nessuna animazione gratuita. Ogni elemento ha una ragione di esistere.
+2. **Tipografia come protagonista** — I titoli e i dati parlano da soli. Grandi numeri, gerarchia chiara, ampio respiro (whitespace).
+3. **Palette contenuta** — Bianco, nero, grigi caldi. Un solo colore d'accento usato con parsimonia per dati chiave e CTA.
+4. **Credibilità visiva** — Grafici puliti, tabelle leggibili, fonti sempre visibili. Deve sembrare una piattaforma su cui si prendono decisioni da milioni di euro.
+5. **Mai pacchiano** — No gradienti vistosi, no ombre pesanti, no bordi colorati, no emoji nell'interfaccia, no dark theme.
+
+### Palette Colori
+
+| Ruolo | Colore | Uso |
+|---|---|---|
+| Background | `#FFFFFF` bianco | Sfondo principale |
+| Surface | `#F8F7F4` avorio caldo | Card, sezioni alternate |
+| Text Primary | `#1A1A1A` nero morbido | Titoli, testo principale |
+| Text Secondary | `#6B6B6B` grigio | Testo secondario, label |
+| Border | `#E5E5E5` grigio chiaro | Linee, separatori, bordi tabelle |
+| Accent | `#C9A84C` oro | Solo per: score principali, badge rating, CTA primaria |
+| Positive | `#2D8C4E` verde scuro | Variazioni positive, "Buy" |
+| Negative | `#C62828` rosso scuro | Variazioni negative, "Sell" |
+| Chart Line | `#1A1A1A` nero | Linea principale dei grafici |
+
+### Tipografia
+
+- **Titoli/Display**: Playfair Display (serif) — eleganza editoriale
+- **Body/UI**: Inter (sans-serif) — leggibilità e modernità
+- **Dati/Numeri**: Tabular nums (monospace per allineamento) — precisione finanziaria
+- **Gerarchia**: H1 grande e leggero, H2 medio e bold, body 16px, ampio line-height
+
+### Layout
+
+- **Max-width**: 1200px centrato, ampi margini laterali
+- **Grid**: 12 colonne, gap generosi (24-32px)
+- **Whitespace**: Abbondante — il vuoto è un elemento di design
+- **Card**: Bordo sottile `#E5E5E5`, angoli appena arrotondati (4-6px), no ombre pesanti
+- **Tabelle**: Stile editoriale — righe alternate leggere, header grassetto, allineamento numeri a destra
+
+### Riferimenti Visivi
+
+- Wall Street Journal (wsj.com) — layout editoriale, tipografia
+- Financial Times (ft.com) — palette calda, autorevolezza
+- Bloomberg Terminal — densità dati, precisione
+- Artnet/Artsy — solo per la struttura contenuti arte, NON per lo stile
+
+### Anti-pattern (da EVITARE assolutamente)
+
+- Dark mode / sfondi scuri
+- Gradienti colorati
+- Ombre esagerate (box-shadow pesanti)
+- Animazioni continue o appariscenti
+- Icone colorate o emoji nell'UI
+- Font decorativi o "creativi"
+- Bordi arrotondati eccessivi (no border-radius > 8px)
+- Colori saturi/fluo
+- Immagini stock generiche
+- Layout che sembra un template Bootstrap/SaaS
 
 ## Language
 - UI text is in **Italian** (the platform targets Italian collectors primarily)

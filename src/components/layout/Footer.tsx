@@ -19,9 +19,10 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-3">Prodotto</h4>
             <ul className="space-y-2 text-sm text-brand-400">
+              <li><Link href="/artisti" className="hover:text-white transition-colors">Database Artisti</Link></li>
+              <li><Link href="/dashboard" className="hover:text-white transition-colors">Dashboard</Link></li>
               <li><Link href="/newsletter" className="hover:text-white transition-colors">Newsletter</Link></li>
-              <li><Link href="/database" className="hover:text-white transition-colors">Database</Link></li>
-              <li><Link href="/report" className="hover:text-white transition-colors">Report</Link></li>
+              <li><Link href="/pricing" className="hover:text-white transition-colors">Prezzi</Link></li>
             </ul>
           </div>
           <div>

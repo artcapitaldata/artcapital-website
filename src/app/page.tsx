@@ -63,7 +63,7 @@ export default function HomePage() {
             Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/database" className="btn-primary text-lg px-8 py-3 rounded-lg inline-flex items-center justify-center gap-2">
+            <Link href="/artisti" className="btn-primary text-lg px-8 py-3 rounded-lg inline-flex items-center justify-center gap-2">
               Esplora il Database <ArrowUpRight className="w-5 h-5" />
             </Link>
             <Link href="/newsletter" className="btn-secondary text-lg px-8 py-3 rounded-lg inline-flex items-center justify-center">

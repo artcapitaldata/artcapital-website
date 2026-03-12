@@ -12,10 +12,10 @@ export const SITE = {
 
 export const NAV_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'Database', href: '/database', badge: 'Soon' },
+  { label: 'Artisti', href: '/artisti' },
+  { label: 'Dashboard', href: '/dashboard' },
   { label: 'Newsletter', href: '/newsletter' },
-  { label: 'Report', href: '/report' },
-  { label: 'Chi Siamo', href: '/about' },
+  { label: 'Prezzi', href: '/pricing' },
 ] as const
 
 export const SOCIAL_LINKS = {
@@ -63,7 +63,7 @@ export const PRICING = {
     features: [
       'Newsletter completa + archivio',
       'Database artisti illimitato',
-      'Art Performance Index™',
+      'Art Performance Index\u2122',
       'Grafici performance storici',
       'Alert personalizzati',
     ],

@@ -161,13 +161,6 @@ export default function HomePage() {
           <p className="text-brand-600 text-xs mt-3">Niente spam. Cancellati quando vuoi.</p>
         </div>
       </section>
-
-      <style jsx global>{`
-        .ticker-wrap { width: 100%; overflow: hidden; }
-        .ticker { display: inline-flex; animation: ticker 40s linear infinite; white-space: nowrap; }
-        .ticker:hover { animation-play-state: paused; }
-        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
-      `}</style>
     </main>
   );
 }

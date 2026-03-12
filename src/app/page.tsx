@@ -38,14 +38,10 @@ export default function HomePage() {
 
       {/* Hero — editorial masthead */}
       <section className="container-ac pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="rule-thick mb-6" />
         <div className="grid md:grid-cols-12 gap-8 md:gap-12">
           <div className="md:col-span-7">
-            <h1 className="font-display font-normal text-text-primary leading-[1.05] mb-3" style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', letterSpacing: '-0.02em' }}>
-              Art
-            </h1>
-            <h1 className="font-display italic font-normal text-text-primary leading-[1.05] mb-8" style={{ fontSize: 'clamp(3rem, 8vw, 7rem)', letterSpacing: '-0.02em' }}>
-              Capital
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-normal text-text-primary leading-[1.05] mb-8" style={{ letterSpacing: '-0.02em' }}>
+              Art Capital
             </h1>
             <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-lg">
               Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.

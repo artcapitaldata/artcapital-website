@@ -78,3 +78,32 @@ NEXT_PUBLIC_SITE_URL=https://artcapitaldata.com
 - Repo: artcapital-website
 - Branch: main
 - Auto-deploys to Vercel on push
+
+
+---
+
+## DATA METHODOLOGY (CRITICAL)
+
+**LEGGI OBBLIGATORIAMENTE il file `DATA_METHODOLOGY.md` prima di lavorare su qualsiasi cosa relativa a dati, prezzi, indici o score.**
+
+### Regole Fondamentali sui Dati
+
+1. **MAI inventare dati d'asta** — se non ci sono dati reali, mostrare "Dati non disponibili"
+2. **MAI calcolare indici senza almeno 3 data points** — mostrare "Dati insufficienti"
+3. **SEMPRE includere source_url** — nessun risultato d'asta senza link alla fonte originale
+4. **SEMPRE mantenere la valuta originale** — conversioni solo per calcoli aggregati
+5. **Il Price Index è PER CATEGORIA medium** — mai mischiare pitture con stampe
+6. **I mock data devono essere marcati** — chiaramente indicati come "demo/mock" nel codice e rimossi appena disponibili dati reali
+
+### Come Funziona il Sistema Dati
+
+```
+[Case d'Asta] → [Scraping Automatico] → [auction_results] → [Calcolo Indici] → [price_index + api_scores]
+```
+
+- **auction_results**: dati grezzi dalle aste con source_url obbligatorio
+- **price_index**: calcolato dai risultati reali, per artista/anno/categoria medium
+- **api_scores**: calcolato algoritmicamente dai risultati + mostre + mercato
+- **Formula API Score**: (Momentum × 0.35) + (Market Depth × 0.25) + (Recognition × 0.20) + (Consistency × 0.20)
+
+Vedi `DATA_METHODOLOGY.md` per tutti i dettagli.

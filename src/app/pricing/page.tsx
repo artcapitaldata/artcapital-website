@@ -29,77 +29,71 @@ const tiers = [
 
 export default function PricingPage() {
   return (
-    <main className="min-h-screen py-12 px-5">
-      <div className="max-w-4xl mx-auto">
-        <div className="text-center mb-14">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Piani e Prezzi</h1>
-          <p className="text-text-secondary text-lg max-w-xl mx-auto">
-            Scegli il piano pi&ugrave; adatto alle tue esigenze. Upgrade o cancellazione in qualsiasi momento.
-          </p>
-        </div>
+    <main className="min-h-screen">
+      <div className="container-ac py-12 md:py-16">
+        <div className="max-w-4xl mx-auto">
+          <div className="rule-thick mb-4" />
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-4">Piani e Prezzi</h1>
+            <p className="text-text-secondary text-lg max-w-lg mx-auto leading-relaxed">
+              Scegli il piano pi&ugrave; adatto alle tue esigenze. Upgrade o cancellazione in qualsiasi momento.
+            </p>
+          </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {tiers.map((tier) => (
-            <div
-              key={tier.name}
-              className={`border rounded p-6 flex flex-col bg-white ${
-                tier.highlighted
-                  ? 'border-accent relative'
-                  : 'border-border'
-              }`}
-            >
-              {tier.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded">
-                  Consigliato
-                </div>
-              )}
-              <h2 className="text-xl font-display font-bold text-text-primary mb-1">{tier.name}</h2>
-              <p className="text-text-secondary text-sm mb-5">{tier.description}</p>
-              <div className="mb-6">
-                {'priceMonthly' in tier ? (
-                  <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-mono font-bold text-text-primary">
-                      &euro;{tier.priceMonthly}
-                    </span>
-                    <span className="text-text-secondary text-sm">/mese</span>
-                  </div>
-                ) : (
-                  <div className="text-4xl font-mono font-bold text-text-primary">&euro;0</div>
-                )}
-                {'priceYearly' in tier && (
-                  <p className="text-text-secondary text-xs mt-1">
-                    oppure &euro;{tier.priceYearly}/anno (risparmi {Math.round((1 - tier.priceYearly / (tier.priceMonthly * 12)) * 100)}%)
-                  </p>
-                )}
-              </div>
-              <ul className="space-y-3 mb-8 flex-1">
-                {tier.features.map((feature) => (
-                  <li key={feature} className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
-                    <span className="text-text-secondary">{feature}</span>
-                  </li>
-                ))}
-              </ul>
-              <button
-                className={
-                  tier.highlighted
-                    ? 'btn-primary w-full py-3'
-                    : 'btn-secondary w-full py-3'
-                }
+          <div className="grid md:grid-cols-3 gap-0 border border-border" style={{ borderRadius: '2px' }}>
+            {tiers.map((tier, i) => (
+              <div
+                key={tier.name}
+                className={`p-8 flex flex-col ${
+                  i > 0 ? 'border-t md:border-t-0 md:border-l border-border' : ''
+                } ${tier.highlighted ? 'bg-surface relative' : 'bg-white'}`}
               >
-                {tier.cta}
-              </button>
-            </div>
-          ))}
-        </div>
+                {tier.highlighted && (
+                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-[11px] font-semibold px-3 py-1 uppercase tracking-wider" style={{ borderRadius: '2px' }}>
+                    Consigliato
+                  </div>
+                )}
+                <h2 className="text-xl font-display font-normal text-text-primary mb-1">{tier.name}</h2>
+                <p className="text-text-secondary text-sm mb-6">{tier.description}</p>
+                <div className="mb-8">
+                  {'priceMonthly' in tier ? (
+                    <div className="flex items-baseline gap-1">
+                      <span className="text-4xl font-mono font-bold text-text-primary">&euro;{tier.priceMonthly}</span>
+                      <span className="text-text-secondary text-sm">/mese</span>
+                    </div>
+                  ) : (
+                    <div className="text-4xl font-mono font-bold text-text-primary">&euro;0</div>
+                  )}
+                  {'priceYearly' in tier && (
+                    <p className="text-text-secondary text-xs mt-1">
+                      oppure &euro;{tier.priceYearly}/anno (risparmi {Math.round((1 - tier.priceYearly / (tier.priceMonthly * 12)) * 100)}%)
+                    </p>
+                  )}
+                </div>
+                <div className="rule mb-6" />
+                <ul className="space-y-3 mb-8 flex-1">
+                  {tier.features.map((feature) => (
+                    <li key={feature} className="flex items-start gap-2.5 text-sm">
+                      <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                      <span className="text-text-secondary">{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button className={tier.highlighted ? 'btn-primary w-full' : 'btn-secondary w-full'}>
+                  {tier.cta}
+                </button>
+              </div>
+            ))}
+          </div>
 
-        <div className="text-center mt-12">
-          <p className="text-text-secondary text-sm">
-            Hai domande? Scrivici a{' '}
-            <a href="mailto:info@artcapitaldata.com" className="text-accent hover:underline">
-              info@artcapitaldata.com
-            </a>
-          </p>
+          <div className="text-center mt-14">
+            <p className="text-text-secondary text-sm">
+              Hai domande? Scrivici a{' '}
+              <a href="mailto:info@artcapitaldata.com" className="text-accent hover:underline">
+                info@artcapitaldata.com
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </main>

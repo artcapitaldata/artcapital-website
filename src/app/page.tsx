@@ -1,6 +1,7 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
+// DEMO — variazioni percentuali placeholder
 const tickerData = [
   { name: 'Basquiat', change: 12.4, direction: 'up' },
   { name: 'Fontana', change: 8.2, direction: 'up' },
@@ -16,33 +17,17 @@ const tickerData = [
   { name: 'Ghenie', change: 22.1, direction: 'up' },
 ];
 
-const features = [
-  { title: 'Price Index', description: 'Indici di prezzo storici normalizzati per ogni artista. Trend dal 2000 ad oggi con grafici interattivi.' },
-  { title: 'Art Performance Index', description: 'Punteggio 0-100 basato su momentum, profondita di mercato, riconoscimento e consistenza.' },
-  { title: 'Database 500+ Artisti', description: 'Artisti contemporanei con dati di vendita, mostre, quotazioni e analisi dettagliate.' },
-  { title: 'Newsletter Settimanale', description: 'Market Pulse ogni settimana: analisi mercato, deep dive su artisti, radar delle opportunita.' },
-  { title: 'Alert Personalizzati', description: 'Notifiche quando un artista nella tua watchlist supera soglie di prezzo o cambia rating.' },
-  { title: 'Dati Verificati', description: "Risultati da Christie's, Sotheby's, Phillips e le principali case d'asta mondiali." },
-];
-
-const stats = [
-  { value: '$11.1B', label: 'Volume Mercato 2024' },
-  { value: '867K', label: 'Opere Vendute' },
-  { value: '500+', label: 'Artisti Monitorati' },
-  { value: '10+', label: "Case d'Asta" },
-];
-
 export default function HomePage() {
   return (
     <main>
       {/* Ticker */}
-      <div className="border-b border-border overflow-hidden bg-surface">
+      <div className="border-b border-border overflow-hidden">
         <div className="ticker-wrap">
           <div className="ticker">
             {[...tickerData, ...tickerData].map((item, i) => (
-              <span key={i} className="inline-flex items-center gap-1.5 px-4 py-2 text-sm">
+              <span key={i} className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px]">
                 <span className="text-text-primary font-medium">{item.name}</span>
-                <span className={item.direction === 'up' ? 'text-positive font-mono' : 'text-negative font-mono'}>
+                <span className={`font-mono ${item.direction === 'up' ? 'text-positive' : 'text-negative'}`}>
                   {item.direction === 'up' ? '+' : ''}{item.change}%
                 </span>
               </span>
@@ -51,116 +36,167 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* Hero */}
-      <section className="py-20 md:py-28 px-5">
-        <div className="max-w-editorial mx-auto">
-          <p className="text-sm font-medium text-accent tracking-wider uppercase mb-6">Art Market Intelligence</p>
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary mb-6 leading-[1.1] max-w-3xl">
-            Il Bloomberg<br />dell&apos;Arte
-          </h1>
-          <p className="text-xl text-text-secondary max-w-2xl mb-10 leading-relaxed">
-            Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Link href="/artisti" className="btn-primary text-base px-8 py-3 inline-flex items-center justify-center gap-2">
-              Esplora il Database <ArrowUpRight className="w-4 h-4" />
-            </Link>
-            <Link href="/newsletter" className="btn-secondary text-base px-8 py-3 inline-flex items-center justify-center">
-              Newsletter Gratuita
-            </Link>
+      {/* Hero — editorial masthead */}
+      <section className="container-ac pt-20 pb-16 md:pt-28 md:pb-20">
+        <div className="rule-thick mb-6" />
+        <div className="grid md:grid-cols-12 gap-8 md:gap-12">
+          <div className="md:col-span-7">
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-normal text-text-primary leading-[1.05] mb-8">
+              Il Bloomberg<br />dell&apos;Arte
+            </h1>
+            <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-lg">
+              Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.
+            </p>
           </div>
-        </div>
-      </section>
-
-      {/* Stats bar */}
-      <section className="border-y border-border py-8 bg-surface">
-        <div className="max-w-editorial mx-auto px-5 grid grid-cols-2 md:grid-cols-4 gap-8">
-          {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <div className="text-3xl font-display font-bold text-text-primary mb-1">{stat.value}</div>
-              <div className="text-text-secondary text-sm">{stat.label}</div>
+          <div className="md:col-span-5 md:pt-4">
+            <div className="space-y-8">
+              <div>
+                <p className="section-label mb-3">Art Performance Index</p>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Punteggio 0–100 calcolato su momentum, profondità di mercato, riconoscimento istituzionale e consistenza dei risultati d&apos;asta.
+                </p>
+              </div>
+              <div className="rule" />
+              <div>
+                <p className="section-label mb-3">Database</p>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Oltre 500 artisti con dati verificati da Christie&apos;s, Sotheby&apos;s, Phillips e le principali case d&apos;asta.
+                </p>
+              </div>
+              <div className="rule" />
+              <div className="flex gap-4">
+                <Link href="/artisti" className="btn-primary gap-2">
+                  Esplora il Database <ArrowRight className="w-4 h-4" />
+                </Link>
+                <Link href="/newsletter" className="btn-secondary">
+                  Newsletter
+                </Link>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-20 px-5">
-        <div className="max-w-editorial mx-auto">
-          <div className="mb-14">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Strumenti Professionali</h2>
-            <p className="text-text-secondary text-lg max-w-xl">Tutto quello che serve per analizzare il mercato dell&apos;arte con un approccio data-driven.</p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border rounded">
-            {features.map((feature) => (
-              <div key={feature.title} className="bg-white p-8">
-                <h3 className="text-lg font-semibold text-text-primary mb-2">{feature.title}</h3>
-                <p className="text-text-secondary text-sm leading-relaxed">{feature.description}</p>
+      {/* Key Numbers */}
+      <section className="bg-surface">
+        <div className="container-ac py-14">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+            {[
+              { value: '$11.1B', label: 'Volume Mercato 2024' },
+              { value: '867K', label: 'Opere Vendute' },
+              { value: '500+', label: 'Artisti Monitorati' },
+              { value: '10+', label: "Case d'Asta" },
+            ].map((stat) => (
+              <div key={stat.label}>
+                <div className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-1">{stat.value}</div>
+                <div className="text-text-secondary text-sm">{stat.label}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Artist Preview */}
-      <section className="py-20 px-5 bg-surface">
-        <div className="max-w-editorial mx-auto">
-          <div className="mb-10">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Anteprima Database</h2>
-            <p className="text-text-secondary text-lg">Ecco come appare una scheda artista su Art Capital</p>
-          </div>
-          <div className="max-w-md mx-auto card p-6">
-            <div className="flex items-start justify-between mb-5">
-              <div>
-                <h3 className="text-xl font-display font-bold text-text-primary">Jean-Michel Basquiat</h3>
-                <p className="text-text-secondary text-sm">Americano, 1960–1988</p>
-                <p className="text-text-secondary text-xs mt-0.5">Neo-Espressionismo, Street Art</p>
-              </div>
-              <div className="text-right">
-                <div className="text-3xl font-mono font-bold text-accent">87</div>
-                <span className="badge-buy">Strong Buy</span>
-              </div>
+      {/* What We Offer — editorial columns, NOT feature cards */}
+      <section className="container-ac py-20 md:py-24">
+        <div className="rule-thick mb-4" />
+        <h2 className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-12">
+          Strumenti per decisioni informate
+        </h2>
+        <div className="grid md:grid-cols-3 gap-0">
+          {[
+            { title: 'Price Index', text: 'Indici di prezzo storici normalizzati per ogni artista. Visualizza trend dal 2000 ad oggi con grafici finanziari.' },
+            { title: 'Art Performance Index', text: 'Score 0–100 che sintetizza momentum di mercato, profondità, riconoscimento e consistenza in un unico numero.' },
+            { title: 'Alert & Newsletter', text: 'Market Pulse settimanale e notifiche personalizzate su variazioni di prezzo e cambi di rating nella tua watchlist.' },
+          ].map((item, i) => (
+            <div key={item.title} className={`py-6 ${i > 0 ? 'md:pl-8 md:border-l md:border-border' : ''}`}>
+              <h3 className="text-lg font-display font-normal text-text-primary mb-2">{item.title}</h3>
+              <p className="text-text-secondary text-sm leading-relaxed">{item.text}</p>
             </div>
-            <div className="bg-surface rounded p-4 mb-4">
-              <div className="text-xs text-text-secondary mb-2">Price Index (2000–2025)</div>
-              <div className="flex items-end gap-0.5 h-16">
-                {[100,92,108,172,233,322,400,267,194,289,378,472,667,583,544,611,1000,833,750,611,917,1056,944,1000,1111].map((v, i) => (
-                  <div key={i} className="flex-1 bg-text-primary/15 rounded-t" style={{ height: `${(v / 1111) * 100}%` }} />
-                ))}
-              </div>
-              <div className="flex justify-between mt-1">
-                <span className="text-[10px] text-text-secondary">2000</span>
-                <span className="text-[10px] text-text-secondary">2025</span>
-              </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Artist Preview — editorial card */}
+      <section className="bg-surface">
+        <div className="container-ac py-20 md:py-24">
+          <div className="grid md:grid-cols-12 gap-12">
+            <div className="md:col-span-5">
+              <p className="section-label mb-3">Anteprima</p>
+              <h2 className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-4">
+                Scheda Artista
+              </h2>
+              <p className="text-text-secondary leading-relaxed mb-8">
+                Ogni artista nel database ha una scheda completa con score, breakdown dei fattori, indice di prezzo storico e risultati d&apos;asta verificati.
+              </p>
+              <Link href="/artisti" className="btn-secondary gap-2 inline-flex">
+                Vedi tutti gli artisti <ArrowRight className="w-4 h-4" />
+              </Link>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-sm">
-              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Momentum</div><div className="text-text-primary font-mono font-semibold">92</div></div>
-              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Market Depth</div><div className="text-text-primary font-mono font-semibold">85</div></div>
-              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Recognition</div><div className="text-text-primary font-mono font-semibold">95</div></div>
-              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Consistency</div><div className="text-text-primary font-mono font-semibold">78</div></div>
+            <div className="md:col-span-6 md:col-start-7">
+              <div className="card p-8">
+                <div className="flex items-start justify-between mb-6">
+                  <div>
+                    <h3 className="text-2xl font-display font-normal text-text-primary">Jean-Michel Basquiat</h3>
+                    <p className="text-text-secondary text-sm mt-1">Americano, 1960–1988</p>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-4xl font-mono font-bold text-accent leading-none">87</div>
+                    <span className="badge-buy mt-1">Strong Buy</span>
+                  </div>
+                </div>
+                <div className="rule mb-5" />
+                <div className="grid grid-cols-4 gap-4 mb-5">
+                  {[
+                    { label: 'Momentum', value: 92 },
+                    { label: 'Depth', value: 85 },
+                    { label: 'Recognition', value: 95 },
+                    { label: 'Consistency', value: 78 },
+                  ].map((m) => (
+                    <div key={m.label}>
+                      <div className="text-text-secondary text-[11px] uppercase tracking-wider mb-1">{m.label}</div>
+                      <div className="text-text-primary font-mono text-xl font-semibold">{m.value}</div>
+                    </div>
+                  ))}
+                </div>
+                <div className="rule mb-5" />
+                <div className="bg-surface p-4" style={{ borderRadius: '2px' }}>
+                  <div className="text-[11px] text-text-secondary uppercase tracking-wider mb-3">Price Index 2000–2025</div>
+                  <div className="flex items-end gap-[2px] h-20">
+                    {[100,92,108,172,233,322,400,267,194,289,378,472,667,583,544,611,1000,833,750,611,917,1056,944,1000,1111].map((v, i) => (
+                      <div key={i} className="flex-1 bg-text-primary" style={{ height: `${(v / 1111) * 100}%`, opacity: 0.2, borderRadius: '1px 1px 0 0' }} />
+                    ))}
+                  </div>
+                  <div className="flex justify-between mt-2">
+                    <span className="text-[10px] font-mono text-text-secondary">2000</span>
+                    <span className="text-[10px] font-mono text-text-secondary">2025</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-20 px-5 border-t border-border">
-        <div className="max-w-xl mx-auto text-center">
-          <h2 className="text-3xl font-display font-bold text-text-primary mb-3">Art Capital Weekly</h2>
-          <p className="text-text-secondary mb-8 leading-relaxed">
-            Ogni settimana nella tua inbox: analisi di mercato, artisti sotto i riflettori, risultati d&apos;asta e opportunita. Gratis.
+      <section className="container-ac py-20 md:py-24">
+        <div className="max-w-lg mx-auto text-center">
+          <p className="section-label mb-4">Newsletter</p>
+          <h2 className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-4">Art Capital Weekly</h2>
+          <p className="text-text-secondary mb-10 leading-relaxed">
+            Ogni settimana nella tua inbox: analisi di mercato, artisti sotto i riflettori, risultati d&apos;asta e opportunità.
           </p>
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
               type="email"
               placeholder="La tua email"
-              className="flex-1 border border-border rounded px-4 py-3 text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-text-primary transition-colors bg-white"
+              className="flex-1 border border-border px-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-text-primary transition-colors bg-white text-sm"
+              style={{ borderRadius: '2px' }}
             />
-            <button type="submit" className="btn-primary px-6 py-3 whitespace-nowrap">
+            <button type="submit" className="btn-primary whitespace-nowrap">
               Iscriviti Gratis
             </button>
           </form>
-          <p className="text-text-secondary text-xs mt-3">Niente spam. Cancellati quando vuoi.</p>
+          <p className="text-text-secondary text-xs mt-4">Niente spam. Cancellati quando vuoi.</p>
         </div>
       </section>
     </main>

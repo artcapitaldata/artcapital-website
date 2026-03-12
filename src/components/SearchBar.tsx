@@ -17,7 +17,8 @@ export default function SearchBar({ value, onChange, placeholder = 'Cerca artist
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full pl-10 pr-4 py-2.5 border border-border rounded text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-text-primary transition-colors bg-white text-sm"
+        className="w-full pl-10 pr-4 py-2.5 border border-border text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-text-primary transition-colors bg-white text-sm"
+        style={{ borderRadius: '2px' }}
       />
     </div>
   )

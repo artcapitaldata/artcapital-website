@@ -15,7 +15,7 @@ interface ArtistData {
   medium: string[]
   movement: string[]
   bio: string
-  score: { score: number; momentum: number; market_depth: number; recognition: number; consistency: number; rating: string }
+  score: { score: number; momentum: number; market_depth: number; recognition: number; consistency: number; rating: string } | null
   priceIndex: { year: number; index_value: number; volume: number }[]
   auctions: { title: string; auction_house: string; date: string; hammer_price: number | null; estimate_low: number; estimate_high: number; currency: string; sold: boolean }[]
   exhibitions: { title: string; venue: string; city: string; year: number; type: string }[]
@@ -54,10 +54,12 @@ export default function ArtistDetailClient({ artist }: { artist: ArtistData }) {
               </div>
               <p className="text-text-secondary leading-relaxed max-w-2xl">{artist.bio}</p>
             </div>
-            <div className="flex flex-col items-center md:items-end shrink-0">
-              <div className="text-5xl font-mono font-bold text-accent mb-2">{artist.score.score}</div>
-              <ApiScoreBadge score={artist.score.score} size="lg" />
-            </div>
+            {artist.score && (
+              <div className="flex flex-col items-center md:items-end shrink-0">
+                <div className="text-5xl font-mono font-bold text-accent mb-2">{artist.score.score}</div>
+                <ApiScoreBadge score={artist.score.score} size="lg" />
+              </div>
+            )}
           </div>
         </div>
 

@@ -9,7 +9,7 @@ interface PriceChartProps {
 export default function PriceChart({ data }: PriceChartProps) {
   if (!data.length) {
     return (
-      <div className="h-64 flex items-center justify-center text-brand-500">
+      <div className="h-64 flex items-center justify-center text-text-secondary">
         Nessun dato disponibile
       </div>
     )
@@ -18,36 +18,37 @@ export default function PriceChart({ data }: PriceChartProps) {
   return (
     <ResponsiveContainer width="100%" height={300}>
       <LineChart data={data} margin={{ top: 5, right: 20, bottom: 5, left: 10 }}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#334e68" strokeOpacity={0.3} />
+        <CartesianGrid strokeDasharray="3 3" stroke="#E5E5E5" />
         <XAxis
           dataKey="year"
-          stroke="#627d98"
-          tick={{ fill: '#627d98', fontSize: 12 }}
+          stroke="#6B6B6B"
+          tick={{ fill: '#6B6B6B', fontSize: 12 }}
           tickLine={false}
         />
         <YAxis
-          stroke="#627d98"
-          tick={{ fill: '#627d98', fontSize: 12 }}
+          stroke="#6B6B6B"
+          tick={{ fill: '#6B6B6B', fontSize: 12 }}
           tickLine={false}
           axisLine={false}
         />
         <Tooltip
           contentStyle={{
-            backgroundColor: '#102a43',
-            border: '1px solid #334e68',
-            borderRadius: '8px',
-            color: '#fff',
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #E5E5E5',
+            borderRadius: '4px',
+            color: '#1A1A1A',
+            fontSize: 13,
           }}
-          labelStyle={{ color: '#C9A84C' }}
+          labelStyle={{ color: '#1A1A1A', fontWeight: 600 }}
           formatter={(value: number) => [value.toFixed(0), 'Index']}
         />
         <Line
           type="monotone"
           dataKey="index_value"
-          stroke="#C9A84C"
-          strokeWidth={2.5}
+          stroke="#1A1A1A"
+          strokeWidth={2}
           dot={false}
-          activeDot={{ r: 5, fill: '#C9A84C', stroke: '#102a43', strokeWidth: 2 }}
+          activeDot={{ r: 4, fill: '#1A1A1A', stroke: '#FFFFFF', strokeWidth: 2 }}
         />
       </LineChart>
     </ResponsiveContainer>

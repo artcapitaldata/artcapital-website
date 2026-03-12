@@ -1,4 +1,4 @@
-import { Mail, Lock, ArrowRight } from 'lucide-react'
+import { Lock, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 
@@ -59,53 +59,52 @@ const DEMO_ISSUES = [
 
 export default function NewsletterPage() {
   return (
-    <main className="min-h-screen bg-brand-950 py-8 px-4">
-      <div className="max-w-4xl mx-auto">
+    <main className="min-h-screen py-10 px-5">
+      <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <Mail className="w-12 h-12 text-accent-gold mx-auto mb-4" />
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">Art Capital Weekly</h1>
-          <p className="text-brand-400 text-lg max-w-xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Art Capital Weekly</h1>
+          <p className="text-text-secondary text-lg max-w-xl mx-auto">
             Ogni settimana: analisi di mercato, deep dive su artisti, risultati d&apos;asta e opportunit&agrave;.
           </p>
         </div>
 
         {/* Subscribe CTA */}
-        <div className="card p-6 mb-10 text-center">
-          <h2 className="text-xl font-semibold text-white mb-3">Iscriviti alla Newsletter</h2>
-          <p className="text-brand-400 text-sm mb-4">Gratis. Niente spam. Cancellati quando vuoi.</p>
+        <div className="bg-surface border border-border rounded p-8 mb-12 text-center">
+          <h2 className="text-xl font-display font-semibold text-text-primary mb-2">Iscriviti alla Newsletter</h2>
+          <p className="text-text-secondary text-sm mb-5">Gratis. Niente spam. Cancellati quando vuoi.</p>
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
               type="email"
               placeholder="La tua email"
-              className="flex-1 bg-brand-800 border border-brand-700 rounded-lg px-4 py-3 text-white placeholder:text-brand-500 focus:outline-none focus:border-accent-gold"
+              className="flex-1 border border-border rounded px-4 py-3 text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-text-primary bg-white transition-colors"
             />
-            <button type="submit" className="btn-primary px-6 py-3 rounded-lg whitespace-nowrap">
+            <button type="submit" className="btn-primary px-6 py-3 whitespace-nowrap">
               Iscriviti Gratis
             </button>
           </form>
         </div>
 
         {/* Archive */}
-        <h2 className="text-xl font-semibold text-white mb-6">Archivio</h2>
-        <div className="space-y-4">
+        <h2 className="text-xs font-semibold text-text-primary mb-5 uppercase tracking-wider">Archivio</h2>
+        <div className="border border-border rounded divide-y divide-border">
           {DEMO_ISSUES.map((issue) => (
-            <div key={issue.number} className="card card-hover p-5">
+            <div key={issue.number} className="p-5 hover:bg-surface/50 transition-colors">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-xs font-mono text-brand-500">#{issue.number}</span>
-                    <span className="text-xs text-brand-600">{new Date(issue.publishedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="text-xs font-mono text-text-secondary">#{issue.number}</span>
+                    <span className="text-xs text-text-secondary">{new Date(issue.publishedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
                     {issue.isPremium && (
-                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full bg-accent-gold/10 text-accent-gold border border-accent-gold/20">
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded text-accent font-semibold" style={{ backgroundColor: 'rgba(201, 168, 76, 0.1)' }}>
                         <Lock className="w-3 h-3" /> Premium
                       </span>
                     )}
                   </div>
-                  <h3 className="text-white font-semibold mb-1">{issue.title}</h3>
-                  <p className="text-brand-400 text-sm leading-relaxed">{issue.summary}</p>
+                  <h3 className="text-text-primary font-semibold mb-1">{issue.title}</h3>
+                  <p className="text-text-secondary text-sm leading-relaxed">{issue.summary}</p>
                 </div>
-                <Link href="#" className="shrink-0 p-2 rounded-lg hover:bg-brand-800/50 transition-colors">
-                  <ArrowRight className="w-5 h-5 text-brand-500" />
+                <Link href="#" className="shrink-0 p-2 rounded hover:bg-surface transition-colors">
+                  <ArrowRight className="w-4 h-4 text-text-secondary" />
                 </Link>
               </div>
             </div>

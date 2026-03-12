@@ -20,15 +20,15 @@ export default function ScoreRadar({ momentum, marketDepth, recognition, consist
   return (
     <ResponsiveContainer width="100%" height={250}>
       <RadarChart data={data} cx="50%" cy="50%" outerRadius="70%">
-        <PolarGrid stroke="#334e68" strokeOpacity={0.5} />
+        <PolarGrid stroke="#E5E5E5" />
         <PolarAngleAxis
           dataKey="subject"
-          tick={{ fill: '#9fb3c8', fontSize: 12 }}
+          tick={{ fill: '#6B6B6B', fontSize: 12 }}
         />
         <PolarRadiusAxis
           angle={90}
           domain={[0, 100]}
-          tick={{ fill: '#627d98', fontSize: 10 }}
+          tick={{ fill: '#6B6B6B', fontSize: 10 }}
           axisLine={false}
         />
         <Radar
@@ -36,7 +36,7 @@ export default function ScoreRadar({ momentum, marketDepth, recognition, consist
           dataKey="value"
           stroke="#C9A84C"
           fill="#C9A84C"
-          fillOpacity={0.2}
+          fillOpacity={0.15}
           strokeWidth={2}
         />
       </RadarChart>

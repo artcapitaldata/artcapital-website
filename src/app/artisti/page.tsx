@@ -5,7 +5,6 @@ import ArtistCard from '@/components/ArtistCard'
 import SearchBar from '@/components/SearchBar'
 import { Filter } from 'lucide-react'
 
-// Demo data — will be replaced with Supabase queries
 const DEMO_ARTISTS = [
   { name: 'Lucio Fontana', slug: 'lucio-fontana', nationality: 'Argentino-Italiano', medium: ['Pittura', 'Scultura', 'Ceramica'], movement: ['Spazialismo'], score: 82 },
   { name: 'Alighiero Boetti', slug: 'alighiero-boetti', nationality: 'Italiano', medium: ['Ricamo', 'Disegno', 'Mixed Media'], movement: ['Arte Povera'], score: 74 },
@@ -50,12 +49,14 @@ export default function ArtistiPage() {
     }).sort((a, b) => (b.score ?? 0) - (a.score ?? 0))
   }, [search, nationality, medium, movement])
 
+  const selectClass = "w-full border border-border rounded px-3 py-2 text-text-primary text-sm focus:outline-none focus:border-text-primary bg-white"
+
   return (
-    <main className="min-h-screen bg-brand-950 py-8 px-4">
-      <div className="max-w-7xl mx-auto">
+    <main className="min-h-screen py-10 px-5">
+      <div className="max-w-editorial mx-auto">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-2">Database Artisti</h1>
-          <p className="text-brand-400">Esplora {DEMO_ARTISTS.length} artisti contemporanei con dati di mercato e performance.</p>
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-2">Database Artisti</h1>
+          <p className="text-text-secondary">Esplora {DEMO_ARTISTS.length} artisti contemporanei con dati di mercato e performance.</p>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
@@ -64,7 +65,7 @@ export default function ArtistiPage() {
           </div>
           <button
             onClick={() => setShowFilters(!showFilters)}
-            className="btn-secondary flex items-center gap-2 px-4 py-3"
+            className="btn-secondary flex items-center gap-2 px-4 py-2.5"
           >
             <Filter className="w-4 h-4" />
             Filtri
@@ -72,50 +73,32 @@ export default function ArtistiPage() {
         </div>
 
         {showFilters && (
-          <div className="card p-4 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div className="card p-5 mb-6 grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="text-xs text-brand-400 mb-1 block">Nazionalit&agrave;</label>
-              <select
-                value={nationality}
-                onChange={(e) => setNationality(e.target.value)}
-                className="w-full bg-brand-800 border border-brand-700/50 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-accent-gold/50"
-              >
+              <label className="text-xs text-text-secondary mb-1.5 block font-medium">Nazionalit&agrave;</label>
+              <select value={nationality} onChange={(e) => setNationality(e.target.value)} className={selectClass}>
                 <option value="">Tutte</option>
-                {ALL_NATIONALITIES.map((n) => (
-                  <option key={n} value={n}>{n}</option>
-                ))}
+                {ALL_NATIONALITIES.map((n) => (<option key={n} value={n}>{n}</option>))}
               </select>
             </div>
             <div>
-              <label className="text-xs text-brand-400 mb-1 block">Medium</label>
-              <select
-                value={medium}
-                onChange={(e) => setMedium(e.target.value)}
-                className="w-full bg-brand-800 border border-brand-700/50 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-accent-gold/50"
-              >
+              <label className="text-xs text-text-secondary mb-1.5 block font-medium">Medium</label>
+              <select value={medium} onChange={(e) => setMedium(e.target.value)} className={selectClass}>
                 <option value="">Tutti</option>
-                {ALL_MEDIUM.map((m) => (
-                  <option key={m} value={m}>{m}</option>
-                ))}
+                {ALL_MEDIUM.map((m) => (<option key={m} value={m}>{m}</option>))}
               </select>
             </div>
             <div>
-              <label className="text-xs text-brand-400 mb-1 block">Movimento</label>
-              <select
-                value={movement}
-                onChange={(e) => setMovement(e.target.value)}
-                className="w-full bg-brand-800 border border-brand-700/50 rounded-lg px-3 py-2 text-white text-sm focus:outline-none focus:border-accent-gold/50"
-              >
+              <label className="text-xs text-text-secondary mb-1.5 block font-medium">Movimento</label>
+              <select value={movement} onChange={(e) => setMovement(e.target.value)} className={selectClass}>
                 <option value="">Tutti</option>
-                {ALL_MOVEMENTS.map((m) => (
-                  <option key={m} value={m}>{m}</option>
-                ))}
+                {ALL_MOVEMENTS.map((m) => (<option key={m} value={m}>{m}</option>))}
               </select>
             </div>
           </div>
         )}
 
-        <p className="text-sm text-brand-500 mb-4">{filtered.length} artisti trovati</p>
+        <p className="text-sm text-text-secondary mb-4">{filtered.length} artisti trovati</p>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {filtered.map((artist) => (
@@ -131,7 +114,7 @@ export default function ArtistiPage() {
         </div>
 
         {filtered.length === 0 && (
-          <div className="text-center py-20 text-brand-500">
+          <div className="text-center py-20 text-text-secondary">
             Nessun artista trovato. Prova a modificare i filtri.
           </div>
         )}

@@ -9,33 +9,23 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Art Capital brand palette
-        brand: {
-          50: '#f0f4f8',
-          100: '#d9e2ec',
-          200: '#bcccdc',
-          300: '#9fb3c8',
-          400: '#829ab1',
-          500: '#627d98',
-          600: '#486581',
-          700: '#334e68',
-          800: '#243b53',
-          900: '#102a43',
-          950: '#0a1929',
-        },
-        accent: {
-          gold: '#C9A84C',
-          'gold-light': '#E8D48B',
-          'gold-dark': '#A08530',
-        },
-        success: '#10B981',
-        warning: '#F59E0B',
-        danger: '#EF4444',
+        surface: '#F8F7F4',
+        border: '#E5E5E5',
+        accent: '#C9A84C',
+        'accent-light': '#E8D48B',
+        'accent-dark': '#A08530',
+        positive: '#2D8C4E',
+        negative: '#C62828',
+        'text-primary': '#1A1A1A',
+        'text-secondary': '#6B6B6B',
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
-        mono: ['JetBrains Mono', 'monospace'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+      },
+      maxWidth: {
+        editorial: '1200px',
       },
     },
   },

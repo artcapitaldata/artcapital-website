@@ -1,4 +1,4 @@
-import { Check, Star } from 'lucide-react'
+import { Check } from 'lucide-react'
 import type { Metadata } from 'next'
 import { PRICING } from '@/lib/constants'
 
@@ -29,11 +29,11 @@ const tiers = [
 
 export default function PricingPage() {
   return (
-    <main className="min-h-screen bg-brand-950 py-12 px-4">
-      <div className="max-w-5xl mx-auto">
-        <div className="text-center mb-12">
-          <h1 className="text-3xl md:text-4xl font-display font-bold text-white mb-3">Piani e Prezzi</h1>
-          <p className="text-brand-400 text-lg max-w-xl mx-auto">
+    <main className="min-h-screen py-12 px-5">
+      <div className="max-w-4xl mx-auto">
+        <div className="text-center mb-14">
+          <h1 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Piani e Prezzi</h1>
+          <p className="text-text-secondary text-lg max-w-xl mx-auto">
             Scegli il piano pi&ugrave; adatto alle tue esigenze. Upgrade o cancellazione in qualsiasi momento.
           </p>
         </div>
@@ -42,32 +42,32 @@ export default function PricingPage() {
           {tiers.map((tier) => (
             <div
               key={tier.name}
-              className={`card p-6 flex flex-col ${
+              className={`border rounded p-6 flex flex-col bg-white ${
                 tier.highlighted
-                  ? 'border-accent-gold/50 shadow-lg shadow-accent-gold/10 relative'
-                  : ''
+                  ? 'border-accent relative'
+                  : 'border-border'
               }`}
             >
               {tier.highlighted && (
-                <div className="absolute -top-3 left-1/2 -translate-x-1/2 inline-flex items-center gap-1 bg-accent-gold text-brand-950 text-xs font-bold px-3 py-1 rounded-full">
-                  <Star className="w-3 h-3" /> Consigliato
+                <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-accent text-white text-xs font-bold px-3 py-1 rounded">
+                  Consigliato
                 </div>
               )}
-              <h2 className="text-xl font-display font-bold text-white mb-2">{tier.name}</h2>
-              <p className="text-brand-400 text-sm mb-4">{tier.description}</p>
+              <h2 className="text-xl font-display font-bold text-text-primary mb-1">{tier.name}</h2>
+              <p className="text-text-secondary text-sm mb-5">{tier.description}</p>
               <div className="mb-6">
                 {'priceMonthly' in tier ? (
                   <div className="flex items-baseline gap-1">
-                    <span className="text-4xl font-mono font-bold text-white">
+                    <span className="text-4xl font-mono font-bold text-text-primary">
                       &euro;{tier.priceMonthly}
                     </span>
-                    <span className="text-brand-500 text-sm">/mese</span>
+                    <span className="text-text-secondary text-sm">/mese</span>
                   </div>
                 ) : (
-                  <div className="text-4xl font-mono font-bold text-white">&euro;0</div>
+                  <div className="text-4xl font-mono font-bold text-text-primary">&euro;0</div>
                 )}
                 {'priceYearly' in tier && (
-                  <p className="text-brand-500 text-xs mt-1">
+                  <p className="text-text-secondary text-xs mt-1">
                     oppure &euro;{tier.priceYearly}/anno (risparmi {Math.round((1 - tier.priceYearly / (tier.priceMonthly * 12)) * 100)}%)
                   </p>
                 )}
@@ -75,16 +75,16 @@ export default function PricingPage() {
               <ul className="space-y-3 mb-8 flex-1">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2 text-sm">
-                    <Check className="w-4 h-4 text-accent-gold shrink-0 mt-0.5" />
-                    <span className="text-brand-300">{feature}</span>
+                    <Check className="w-4 h-4 text-accent shrink-0 mt-0.5" />
+                    <span className="text-text-secondary">{feature}</span>
                   </li>
                 ))}
               </ul>
               <button
                 className={
                   tier.highlighted
-                    ? 'btn-primary w-full py-3 rounded-lg'
-                    : 'btn-secondary w-full py-3 rounded-lg'
+                    ? 'btn-primary w-full py-3'
+                    : 'btn-secondary w-full py-3'
                 }
               >
                 {tier.cta}
@@ -94,9 +94,9 @@ export default function PricingPage() {
         </div>
 
         <div className="text-center mt-12">
-          <p className="text-brand-500 text-sm">
+          <p className="text-text-secondary text-sm">
             Hai domande? Scrivici a{' '}
-            <a href="mailto:info@artcapitaldata.com" className="text-accent-gold hover:underline">
+            <a href="mailto:info@artcapitaldata.com" className="text-accent hover:underline">
               info@artcapitaldata.com
             </a>
           </p>

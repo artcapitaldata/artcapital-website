@@ -1,4 +1,4 @@
-import { TrendingUp, BarChart3, Database, Mail, Bell, ShieldCheck, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
 import Link from 'next/link';
 
 const tickerData = [
@@ -17,12 +17,12 @@ const tickerData = [
 ];
 
 const features = [
-  { icon: TrendingUp, title: 'Price Index', description: 'Indici di prezzo storici normalizzati per ogni artista. Visualizza trend dal 2000 ad oggi con grafici interattivi.' },
-  { icon: BarChart3, title: 'API Score', description: 'Art Performance Index: punteggio 0-100 basato su momentum, profondita di mercato, riconoscimento e consistenza.' },
-  { icon: Database, title: 'Database Artisti', description: 'Oltre 500 artisti contemporanei con dati di vendita, mostre, quotazioni e analisi dettagliate.' },
-  { icon: Mail, title: 'Newsletter Settimanale', description: 'Market Pulse ogni settimana: analisi mercato, deep dive su artisti, radar delle opportunita.' },
-  { icon: Bell, title: 'Alert Personalizzati', description: 'Ricevi notifiche quando un artista nella tua watchlist supera soglie di prezzo o cambia rating.' },
-  { icon: ShieldCheck, title: 'Dati Verificati', description: "Risultati da Christie's, Sotheby's, Phillips e le principali case d'asta mondiali. Dati reali, non stime." },
+  { title: 'Price Index', description: 'Indici di prezzo storici normalizzati per ogni artista. Trend dal 2000 ad oggi con grafici interattivi.' },
+  { title: 'Art Performance Index', description: 'Punteggio 0-100 basato su momentum, profondita di mercato, riconoscimento e consistenza.' },
+  { title: 'Database 500+ Artisti', description: 'Artisti contemporanei con dati di vendita, mostre, quotazioni e analisi dettagliate.' },
+  { title: 'Newsletter Settimanale', description: 'Market Pulse ogni settimana: analisi mercato, deep dive su artisti, radar delle opportunita.' },
+  { title: 'Alert Personalizzati', description: 'Notifiche quando un artista nella tua watchlist supera soglie di prezzo o cambia rating.' },
+  { title: 'Dati Verificati', description: "Risultati da Christie's, Sotheby's, Phillips e le principali case d'asta mondiali." },
 ];
 
 const stats = [
@@ -34,14 +34,15 @@ const stats = [
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
-      <div className="bg-brand-950 border-b border-brand-800 overflow-hidden">
+    <main>
+      {/* Ticker */}
+      <div className="border-b border-border overflow-hidden bg-surface">
         <div className="ticker-wrap">
           <div className="ticker">
             {[...tickerData, ...tickerData].map((item, i) => (
-              <span key={i} className="ticker-item inline-flex items-center gap-1 px-4 py-2 text-sm">
-                <span className="text-brand-300 font-medium">{item.name}</span>
-                <span className={item.direction === 'up' ? 'text-green-400' : 'text-red-400'}>
+              <span key={i} className="inline-flex items-center gap-1.5 px-4 py-2 text-sm">
+                <span className="text-text-primary font-medium">{item.name}</span>
+                <span className={item.direction === 'up' ? 'text-positive font-mono' : 'text-negative font-mono'}>
                   {item.direction === 'up' ? '+' : ''}{item.change}%
                 </span>
               </span>
@@ -50,115 +51,116 @@ export default function HomePage() {
         </div>
       </div>
 
-      <section className="relative bg-gradient-to-b from-brand-950 via-brand-900 to-brand-950 py-24 px-4">
-        <div className="max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-accent/10 border border-accent/30 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
-            <span className="text-accent text-sm font-medium">Live Market Data</span>
-          </div>
-          <h1 className="text-5xl md:text-7xl font-display font-bold text-white mb-6 leading-tight">
-            Il <span className="text-accent">Bloomberg</span><br />dell&apos;Arte
+      {/* Hero */}
+      <section className="py-20 md:py-28 px-5">
+        <div className="max-w-editorial mx-auto">
+          <p className="text-sm font-medium text-accent tracking-wider uppercase mb-6">Art Market Intelligence</p>
+          <h1 className="text-5xl md:text-7xl font-display font-bold text-text-primary mb-6 leading-[1.1] max-w-3xl">
+            Il Bloomberg<br />dell&apos;Arte
           </h1>
-          <p className="text-xl text-brand-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+          <p className="text-xl text-text-secondary max-w-2xl mb-10 leading-relaxed">
             Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link href="/artisti" className="btn-primary text-lg px-8 py-3 rounded-lg inline-flex items-center justify-center gap-2">
-              Esplora il Database <ArrowUpRight className="w-5 h-5" />
+          <div className="flex flex-col sm:flex-row gap-3">
+            <Link href="/artisti" className="btn-primary text-base px-8 py-3 inline-flex items-center justify-center gap-2">
+              Esplora il Database <ArrowUpRight className="w-4 h-4" />
             </Link>
-            <Link href="/newsletter" className="btn-secondary text-lg px-8 py-3 rounded-lg inline-flex items-center justify-center">
+            <Link href="/newsletter" className="btn-secondary text-base px-8 py-3 inline-flex items-center justify-center">
               Newsletter Gratuita
             </Link>
           </div>
         </div>
       </section>
 
-      <section className="bg-brand-900 border-y border-brand-800 py-8">
-        <div className="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8">
+      {/* Stats bar */}
+      <section className="border-y border-border py-8 bg-surface">
+        <div className="max-w-editorial mx-auto px-5 grid grid-cols-2 md:grid-cols-4 gap-8">
           {stats.map((stat) => (
             <div key={stat.label} className="text-center">
-              <div className="text-3xl font-display font-bold text-accent mb-1">{stat.value}</div>
-              <div className="text-brand-400 text-sm">{stat.label}</div>
+              <div className="text-3xl font-display font-bold text-text-primary mb-1">{stat.value}</div>
+              <div className="text-text-secondary text-sm">{stat.label}</div>
             </div>
           ))}
         </div>
       </section>
 
-      <section className="bg-brand-950 py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">Strumenti Professionali</h2>
-            <p className="text-brand-400 text-lg max-w-xl mx-auto">Tutto quello che serve per analizzare il mercato dell&apos;arte con un approccio data-driven.</p>
+      {/* Features */}
+      <section className="py-20 px-5">
+        <div className="max-w-editorial mx-auto">
+          <div className="mb-14">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Strumenti Professionali</h2>
+            <p className="text-text-secondary text-lg max-w-xl">Tutto quello che serve per analizzare il mercato dell&apos;arte con un approccio data-driven.</p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {features.map((feature) => {
-              const Icon = feature.icon;
-              return (
-                <div key={feature.title} className="card card-hover p-6">
-                  <div className="w-12 h-12 bg-accent/10 rounded-lg flex items-center justify-center mb-4">
-                    <Icon className="w-6 h-6 text-accent" />
-                  </div>
-                  <h3 className="text-xl font-semibold text-white mb-2">{feature.title}</h3>
-                  <p className="text-brand-400 leading-relaxed">{feature.description}</p>
-                </div>
-              );
-            })}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px bg-border border border-border rounded">
+            {features.map((feature) => (
+              <div key={feature.title} className="bg-white p-8">
+                <h3 className="text-lg font-semibold text-text-primary mb-2">{feature.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{feature.description}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
-      <section className="bg-brand-900 py-20 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-display font-bold text-white mb-4">Anteprima Database</h2>
-            <p className="text-brand-400 text-lg">Ecco come appare una scheda artista su Art Capital</p>
+      {/* Artist Preview */}
+      <section className="py-20 px-5 bg-surface">
+        <div className="max-w-editorial mx-auto">
+          <div className="mb-10">
+            <h2 className="text-3xl md:text-4xl font-display font-bold text-text-primary mb-3">Anteprima Database</h2>
+            <p className="text-text-secondary text-lg">Ecco come appare una scheda artista su Art Capital</p>
           </div>
           <div className="max-w-md mx-auto card p-6">
-            <div className="flex items-start justify-between mb-4">
+            <div className="flex items-start justify-between mb-5">
               <div>
-                <h3 className="text-xl font-bold text-white">Jean-Michel Basquiat</h3>
-                <p className="text-brand-400 text-sm">Americano, 1960-1988</p>
-                <p className="text-brand-500 text-xs mt-1">Neo-Espressionismo, Street Art</p>
+                <h3 className="text-xl font-display font-bold text-text-primary">Jean-Michel Basquiat</h3>
+                <p className="text-text-secondary text-sm">Americano, 1960–1988</p>
+                <p className="text-text-secondary text-xs mt-0.5">Neo-Espressionismo, Street Art</p>
               </div>
               <div className="text-right">
                 <div className="text-3xl font-mono font-bold text-accent">87</div>
-                <span className="badge-buy text-xs px-2 py-0.5 rounded">Strong Buy</span>
+                <span className="badge-buy">Strong Buy</span>
               </div>
             </div>
-            <div className="bg-brand-800/50 rounded-lg p-4 mb-4">
-              <div className="text-xs text-brand-500 mb-2">Price Index (2000-2025)</div>
-              <div className="flex items-end gap-1 h-16">
+            <div className="bg-surface rounded p-4 mb-4">
+              <div className="text-xs text-text-secondary mb-2">Price Index (2000–2025)</div>
+              <div className="flex items-end gap-0.5 h-16">
                 {[100,92,108,172,233,322,400,267,194,289,378,472,667,583,544,611,1000,833,750,611,917,1056,944,1000,1111].map((v, i) => (
-                  <div key={i} className="flex-1 bg-accent/60 rounded-t" style={{ height: `${(v / 1111) * 100}%` }} />
+                  <div key={i} className="flex-1 bg-text-primary/15 rounded-t" style={{ height: `${(v / 1111) * 100}%` }} />
                 ))}
               </div>
               <div className="flex justify-between mt-1">
-                <span className="text-[10px] text-brand-600">2000</span>
-                <span className="text-[10px] text-brand-600">2025</span>
+                <span className="text-[10px] text-text-secondary">2000</span>
+                <span className="text-[10px] text-text-secondary">2025</span>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-3 text-sm">
-              <div className="bg-brand-800/30 rounded p-2"><div className="text-brand-500 text-xs">Momentum</div><div className="text-white font-mono">92</div></div>
-              <div className="bg-brand-800/30 rounded p-2"><div className="text-brand-500 text-xs">Market Depth</div><div className="text-white font-mono">85</div></div>
-              <div className="bg-brand-800/30 rounded p-2"><div className="text-brand-500 text-xs">Recognition</div><div className="text-white font-mono">95</div></div>
-              <div className="bg-brand-800/30 rounded p-2"><div className="text-brand-500 text-xs">Consistency</div><div className="text-white font-mono">78</div></div>
+            <div className="grid grid-cols-2 gap-2 text-sm">
+              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Momentum</div><div className="text-text-primary font-mono font-semibold">92</div></div>
+              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Market Depth</div><div className="text-text-primary font-mono font-semibold">85</div></div>
+              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Recognition</div><div className="text-text-primary font-mono font-semibold">95</div></div>
+              <div className="bg-surface rounded p-2.5"><div className="text-text-secondary text-xs">Consistency</div><div className="text-text-primary font-mono font-semibold">78</div></div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="bg-brand-950 py-20 px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <Mail className="w-12 h-12 text-accent mx-auto mb-6" />
-          <h2 className="text-3xl font-display font-bold text-white mb-4">Art Capital Weekly</h2>
-          <p className="text-brand-400 mb-8 leading-relaxed">
+      {/* Newsletter CTA */}
+      <section className="py-20 px-5 border-t border-border">
+        <div className="max-w-xl mx-auto text-center">
+          <h2 className="text-3xl font-display font-bold text-text-primary mb-3">Art Capital Weekly</h2>
+          <p className="text-text-secondary mb-8 leading-relaxed">
             Ogni settimana nella tua inbox: analisi di mercato, artisti sotto i riflettori, risultati d&apos;asta e opportunita. Gratis.
           </p>
           <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input type="email" placeholder="La tua email" className="flex-1 bg-brand-800 border border-brand-700 rounded-lg px-4 py-3 text-white placeholder:text-brand-500 focus:outline-none focus:border-accent" />
-            <button type="submit" className="btn-primary px-6 py-3 rounded-lg whitespace-nowrap">Iscriviti Gratis</button>
+            <input
+              type="email"
+              placeholder="La tua email"
+              className="flex-1 border border-border rounded px-4 py-3 text-text-primary placeholder:text-text-secondary/60 focus:outline-none focus:border-text-primary transition-colors bg-white"
+            />
+            <button type="submit" className="btn-primary px-6 py-3 whitespace-nowrap">
+              Iscriviti Gratis
+            </button>
           </form>
-          <p className="text-brand-600 text-xs mt-3">Niente spam. Cancellati quando vuoi.</p>
+          <p className="text-text-secondary text-xs mt-3">Niente spam. Cancellati quando vuoi.</p>
         </div>
       </section>
     </main>

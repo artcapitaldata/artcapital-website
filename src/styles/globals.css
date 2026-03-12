@@ -39,3 +39,21 @@
     @apply inline-flex items-center justify-center px-6 py-3 rounded-lg border border-brand-600 text-brand-200 font-medium transition-all duration-200 hover:bg-brand-800 hover:border-brand-500;
   }
 }
+
+/* Ticker animation */
+.ticker-wrap {
+  width: 100%;
+  overflow: hidden;
+}
+.ticker {
+  display: inline-flex;
+  animation: ticker 40s linear infinite;
+  white-space: nowrap;
+}
+.ticker:hover {
+  animation-play-state: paused;
+}
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}

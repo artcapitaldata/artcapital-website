@@ -72,3 +72,33 @@ Configura anche su Vercel (Settings > Environment Variables).
 - Schema definitivo, eseguire nell'ordine
 - RLS essenziale, non rimuovere
 - Seed data sono esempi realistici per il lancio
+
+---
+
+## IMPORTANTE: Metodologia Dati
+
+**LEGGI OBBLIGATORIAMENTE** il file `DATA_METHODOLOGY.md` nella root del progetto. È la fonte di verità per:
+
+- Come raccogliere i dati d'asta (auction_results)
+- Come calcolare il Price Index (per categoria medium)
+- Come calcolare l'API Score (formula con 4 sotto-indici)
+- Le fonti dati (case d'asta da scrapare)
+- Le API REST da implementare per gli agenti automatici
+
+### Regole Fondamentali (da DATA_METHODOLOGY.md):
+
+1. **MAI inventare dati d'asta** — se non ci sono dati reali, il campo è NULL
+2. **MAI calcolare indici senza almeno 3 data points**
+3. **SEMPRE includere source_url** — ogni risultato d'asta deve avere il link alla fonte
+4. **Il Price Index è PER CATEGORIA medium** — painting, work_on_paper, print, sculpture, photography, ceramic, other
+5. **I mock data sono temporanei** — marcali chiaramente come "demo/mock" nel codice
+6. **Valuta originale** — i prezzi vanno in valuta dell'asta, conversione solo per aggregati
+7. **Deduplicazione** — un lotto è unico per (artist_id, auction_house, sale_date, lot_number)
+
+### Prossimi Step per lo Sviluppo:
+
+1. Implementare gli scraper per Christie's e Sotheby's (priorità P0)
+2. Creare le API routes (/api/artists/[slug]/auctions, /api/artists/[slug]/price-index, ecc.)
+3. Aggiungere la pagina /metodologia sul sito
+4. Mostrare i risultati d'asta reali nelle pagine artista con link source_url
+5. Implementare il calcolo automatico degli indici dopo import dati

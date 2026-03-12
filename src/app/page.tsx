@@ -37,40 +37,56 @@ export default function HomePage() {
       </div>
 
       {/* Hero — editorial masthead */}
-      <section className="container-ac pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="rule-thick mb-6" />
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12">
-          <div className="md:col-span-7">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-normal text-text-primary leading-[1.05] mb-8">
-              Art Capital
-            </h1>
-            <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-lg">
-              Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.
+      <section className="container-ac pt-20 pb-16 md:pt-28 md:pb-24">
+        <div className="rule-thick" />
+        <div className="pt-8 pb-10 text-center">
+          <h1 className="text-6xl md:text-8xl lg:text-9xl font-display font-normal text-text-primary leading-[1] tracking-tight">
+            Art Capital
+          </h1>
+          <p className="text-lg md:text-xl font-display font-normal italic text-text-secondary mt-4">
+            Art Market Intelligence
+          </p>
+        </div>
+        <div className="rule mb-10" />
+        <div className="grid md:grid-cols-12 gap-8 md:gap-16">
+          <div className="md:col-span-5">
+            <p className="text-lg text-text-secondary leading-relaxed">
+              Dati, analisi e indici di performance per investitori e collezionisti nel mercato dell&apos;arte contemporanea.
             </p>
+            <div className="flex gap-4 mt-8">
+              <Link href="/artisti" className="btn-primary gap-2">
+                Esplora il Database <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link href="/newsletter" className="btn-secondary">
+                Newsletter
+              </Link>
+            </div>
           </div>
-          <div className="md:col-span-5 md:pt-4">
-            <div className="space-y-8">
+          <div className="md:col-span-6 md:col-start-7">
+            <div className="grid grid-cols-2 gap-x-10 gap-y-6">
               <div>
-                <p className="section-label mb-3">Art Performance Index</p>
+                <p className="section-label mb-2">Art Performance Index</p>
                 <p className="text-text-secondary text-sm leading-relaxed">
-                  Punteggio 0–100 calcolato su momentum, profondità di mercato, riconoscimento istituzionale e consistenza dei risultati d&apos;asta.
+                  Score 0–100 su momentum, profondità di mercato, riconoscimento e consistenza.
                 </p>
               </div>
-              <div className="rule" />
               <div>
-                <p className="section-label mb-3">Database</p>
+                <p className="section-label mb-2">Database</p>
                 <p className="text-text-secondary text-sm leading-relaxed">
-                  Oltre 500 artisti con dati verificati da Christie&apos;s, Sotheby&apos;s, Phillips e le principali case d&apos;asta.
+                  500+ artisti con dati verificati dalle principali case d&apos;asta mondiali.
                 </p>
               </div>
-              <div className="rule" />
-              <div className="flex gap-4">
-                <Link href="/artisti" className="btn-primary gap-2">
-                  Esplora il Database <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/newsletter" className="btn-secondary">
-                  Newsletter
-                </Link>
+              <div>
+                <p className="section-label mb-2">Price Index</p>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Indici storici normalizzati con grafici dal 2000 ad oggi.
+                </p>
+              </div>
+              <div>
+                <p className="section-label mb-2">Newsletter</p>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Market Pulse settimanale con analisi e opportunità.
+                </p>
               </div>
             </div>
           </div>

@@ -5,27 +5,28 @@ import ArtistCard from '@/components/ArtistCard'
 import SearchBar from '@/components/SearchBar'
 import { Filter } from 'lucide-react'
 
+// DEMO — score null, in attesa di dati d'asta reali
 const DEMO_ARTISTS = [
-  { name: 'Lucio Fontana', slug: 'lucio-fontana', nationality: 'Argentino-Italiano', medium: ['Pittura', 'Scultura', 'Ceramica'], movement: ['Spazialismo'], score: 82 },
-  { name: 'Alighiero Boetti', slug: 'alighiero-boetti', nationality: 'Italiano', medium: ['Ricamo', 'Disegno', 'Mixed Media'], movement: ['Arte Povera'], score: 74 },
-  { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', nationality: 'Italiano', medium: ['Scultura', 'Installazione'], movement: ['Arte Contemporanea'], score: 78 },
-  { name: 'Giorgio Morandi', slug: 'giorgio-morandi', nationality: 'Italiano', medium: ['Pittura', 'Incisione'], movement: ['Metafisica'], score: 71 },
-  { name: 'Piero Manzoni', slug: 'piero-manzoni', nationality: 'Italiano', medium: ['Mixed Media', 'Performance'], movement: ['Arte Concettuale'], score: 68 },
-  { name: 'Enrico Castellani', slug: 'enrico-castellani', nationality: 'Italiano', medium: ['Pittura', 'Scultura'], movement: ['ZERO'], score: 62 },
-  { name: 'Rudolf Stingel', slug: 'rudolf-stingel', nationality: 'Italiano', medium: ['Pittura', 'Installazione'], movement: ['Arte Contemporanea'], score: 65 },
-  { name: 'Salvo', slug: 'salvo', nationality: 'Italiano', medium: ['Pittura'], movement: ['Transavanguardia'], score: 55 },
-  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', nationality: 'Americano', medium: ['Pittura', 'Disegno'], movement: ['Neo-Espressionismo'], score: 87 },
-  { name: 'Banksy', slug: 'banksy', nationality: 'Britannico', medium: ['Street Art', 'Stampa'], movement: ['Street Art'], score: 72 },
-  { name: 'Damien Hirst', slug: 'damien-hirst', nationality: 'Britannico', medium: ['Scultura', 'Installazione', 'Pittura'], movement: ['Young British Artists'], score: 58 },
-  { name: 'Jeff Koons', slug: 'jeff-koons', nationality: 'Americano', medium: ['Scultura', 'Pittura'], movement: ['Neo-Pop'], score: 64 },
-  { name: 'Gerhard Richter', slug: 'gerhard-richter', nationality: 'Tedesco', medium: ['Pittura'], movement: ['Fotorealismo'], score: 85 },
-  { name: 'Yoshitomo Nara', slug: 'yoshitomo-nara', nationality: 'Giapponese', medium: ['Pittura', 'Scultura', 'Disegno'], movement: ['Neo-Pop'], score: 76 },
-  { name: 'Anish Kapoor', slug: 'anish-kapoor', nationality: 'Britannico-Indiano', medium: ['Scultura', 'Installazione'], movement: ['Arte Contemporanea'], score: 61 },
-  { name: 'KAWS', slug: 'kaws', nationality: 'Americano', medium: ['Scultura', 'Pittura', 'Toy Art'], movement: ['Neo-Pop', 'Street Art'], score: 69 },
-  { name: 'Cecily Brown', slug: 'cecily-brown', nationality: 'Britannica', medium: ['Pittura'], movement: ['Neo-Espressionismo'], score: 73 },
-  { name: 'George Condo', slug: 'george-condo', nationality: 'Americano', medium: ['Pittura', 'Scultura', 'Disegno'], movement: ['Espressionismo'], score: 67 },
-  { name: 'Adrian Ghenie', slug: 'adrian-ghenie', nationality: 'Rumeno', medium: ['Pittura'], movement: ['Arte Contemporanea'], score: 80 },
-  { name: 'Nicolas Party', slug: 'nicolas-party', nationality: 'Svizzero', medium: ['Pittura', 'Scultura', 'Installazione'], movement: ['Arte Contemporanea'], score: 71 },
+  { name: 'Lucio Fontana', slug: 'lucio-fontana', nationality: 'Argentino-Italiano', medium: ['Pittura', 'Scultura', 'Ceramica'], movement: ['Spazialismo'], score: null as number | null },
+  { name: 'Alighiero Boetti', slug: 'alighiero-boetti', nationality: 'Italiano', medium: ['Ricamo', 'Disegno', 'Mixed Media'], movement: ['Arte Povera'], score: null as number | null },
+  { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', nationality: 'Italiano', medium: ['Scultura', 'Installazione'], movement: ['Arte Contemporanea'], score: null as number | null },
+  { name: 'Giorgio Morandi', slug: 'giorgio-morandi', nationality: 'Italiano', medium: ['Pittura', 'Incisione'], movement: ['Metafisica'], score: null as number | null },
+  { name: 'Piero Manzoni', slug: 'piero-manzoni', nationality: 'Italiano', medium: ['Mixed Media', 'Performance'], movement: ['Arte Concettuale'], score: null as number | null },
+  { name: 'Enrico Castellani', slug: 'enrico-castellani', nationality: 'Italiano', medium: ['Pittura', 'Scultura'], movement: ['ZERO'], score: null as number | null },
+  { name: 'Rudolf Stingel', slug: 'rudolf-stingel', nationality: 'Italiano', medium: ['Pittura', 'Installazione'], movement: ['Arte Contemporanea'], score: null as number | null },
+  { name: 'Salvo', slug: 'salvo', nationality: 'Italiano', medium: ['Pittura'], movement: ['Transavanguardia'], score: null as number | null },
+  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', nationality: 'Americano', medium: ['Pittura', 'Disegno'], movement: ['Neo-Espressionismo'], score: null as number | null },
+  { name: 'Banksy', slug: 'banksy', nationality: 'Britannico', medium: ['Street Art', 'Stampa'], movement: ['Street Art'], score: null as number | null },
+  { name: 'Damien Hirst', slug: 'damien-hirst', nationality: 'Britannico', medium: ['Scultura', 'Installazione', 'Pittura'], movement: ['Young British Artists'], score: null as number | null },
+  { name: 'Jeff Koons', slug: 'jeff-koons', nationality: 'Americano', medium: ['Scultura', 'Pittura'], movement: ['Neo-Pop'], score: null as number | null },
+  { name: 'Gerhard Richter', slug: 'gerhard-richter', nationality: 'Tedesco', medium: ['Pittura'], movement: ['Fotorealismo'], score: null as number | null },
+  { name: 'Yoshitomo Nara', slug: 'yoshitomo-nara', nationality: 'Giapponese', medium: ['Pittura', 'Scultura', 'Disegno'], movement: ['Neo-Pop'], score: null as number | null },
+  { name: 'Anish Kapoor', slug: 'anish-kapoor', nationality: 'Britannico-Indiano', medium: ['Scultura', 'Installazione'], movement: ['Arte Contemporanea'], score: null as number | null },
+  { name: 'KAWS', slug: 'kaws', nationality: 'Americano', medium: ['Scultura', 'Pittura', 'Toy Art'], movement: ['Neo-Pop', 'Street Art'], score: null as number | null },
+  { name: 'Cecily Brown', slug: 'cecily-brown', nationality: 'Britannica', medium: ['Pittura'], movement: ['Neo-Espressionismo'], score: null as number | null },
+  { name: 'George Condo', slug: 'george-condo', nationality: 'Americano', medium: ['Pittura', 'Scultura', 'Disegno'], movement: ['Espressionismo'], score: null as number | null },
+  { name: 'Adrian Ghenie', slug: 'adrian-ghenie', nationality: 'Rumeno', medium: ['Pittura'], movement: ['Arte Contemporanea'], score: null as number | null },
+  { name: 'Nicolas Party', slug: 'nicolas-party', nationality: 'Svizzero', medium: ['Pittura', 'Scultura', 'Installazione'], movement: ['Arte Contemporanea'], score: null as number | null },
 ]
 
 const ALL_NATIONALITIES = [...new Set(DEMO_ARTISTS.map((a) => a.nationality))].sort()

@@ -6,31 +6,33 @@ export const metadata: Metadata = {
   title: 'Dashboard',
 }
 
+// DEMO — tutti gli score e dati di mercato sono placeholder, non derivati da aste reali
 const TOP_MOVERS_UP = [
-  { name: 'Adrian Ghenie', slug: 'adrian-ghenie', change: +22.1, score: 80 },
-  { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', change: +15.2, score: 78 },
-  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', change: +12.4, score: 87 },
-  { name: 'Yoshitomo Nara', slug: 'yoshitomo-nara', change: +9.6, score: 76 },
-  { name: 'Lucio Fontana', slug: 'lucio-fontana', change: +8.2, score: 82 },
+  { name: 'Adrian Ghenie', slug: 'adrian-ghenie', change: +22.1, score: null as number | null },
+  { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', change: +15.2, score: null as number | null },
+  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', change: +12.4, score: null as number | null },
+  { name: 'Yoshitomo Nara', slug: 'yoshitomo-nara', change: +9.6, score: null as number | null },
+  { name: 'Lucio Fontana', slug: 'lucio-fontana', change: +8.2, score: null as number | null },
 ]
 
 const TOP_MOVERS_DOWN = [
-  { name: 'KAWS', slug: 'kaws', change: -4.5, score: 69 },
-  { name: 'Banksy', slug: 'banksy', change: -3.1, score: 72 },
-  { name: 'Gerhard Richter', slug: 'gerhard-richter', change: -1.8, score: 85 },
+  { name: 'KAWS', slug: 'kaws', change: -4.5, score: null as number | null },
+  { name: 'Banksy', slug: 'banksy', change: -3.1, score: null as number | null },
+  { name: 'Gerhard Richter', slug: 'gerhard-richter', change: -1.8, score: null as number | null },
 ]
 
 const MARKET_STATS = [
-  { label: 'Volume Totale 2025', value: '$4.2B', sub: '+8.3% YoY' },
-  { label: 'Artisti Monitorati', value: '500+', sub: '20 nel database' },
-  { label: 'API Score Medio', value: '71.2', sub: 'su 20 artisti' },
-  { label: 'Opere Tracciate', value: '12.4K', sub: 'ultimi 12 mesi' },
+  { label: 'Volume Totale', value: '—', sub: 'In attesa di dati reali' },
+  { label: 'Artisti nel Database', value: '441', sub: 'dati biografici verificati' },
+  { label: 'API Score Medio', value: '—', sub: 'In attesa di dati d\'asta' },
+  { label: 'Opere Tracciate', value: '—', sub: 'In attesa di dati d\'asta' },
 ]
 
+// DEMO — watchlist placeholder
 const WATCHLIST_PLACEHOLDER = [
-  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', score: 87, rating: 'Strong Buy' },
-  { name: 'Gerhard Richter', slug: 'gerhard-richter', score: 85, rating: 'Strong Buy' },
-  { name: 'Lucio Fontana', slug: 'lucio-fontana', score: 82, rating: 'Strong Buy' },
+  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', score: null as number | null, rating: '—' },
+  { name: 'Gerhard Richter', slug: 'gerhard-richter', score: null as number | null, rating: '—' },
+  { name: 'Lucio Fontana', slug: 'lucio-fontana', score: null as number | null, rating: '—' },
 ]
 
 export default function DashboardPage() {
@@ -68,7 +70,7 @@ export default function DashboardPage() {
                 >
                   <div className="flex items-center gap-3">
                     <span className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-xs font-mono text-text-secondary font-semibold">
-                      {artist.score}
+                      {artist.score ?? '—'}
                     </span>
                     <span className="text-text-primary font-medium">{artist.name}</span>
                   </div>
@@ -92,7 +94,7 @@ export default function DashboardPage() {
                 >
                   <div className="flex items-center gap-3">
                     <span className="w-8 h-8 rounded-full bg-surface flex items-center justify-center text-xs font-mono text-text-secondary font-semibold">
-                      {artist.score}
+                      {artist.score ?? '—'}
                     </span>
                     <span className="text-text-primary font-medium">{artist.name}</span>
                   </div>
@@ -119,7 +121,7 @@ export default function DashboardPage() {
                 href={`/artisti/${artist.slug}`}
                 className="card p-5 hover:border-text-secondary transition-colors text-center"
               >
-                <div className="text-3xl font-mono font-bold text-accent mb-1">{artist.score}</div>
+                <div className="text-3xl font-mono font-bold text-accent mb-1">{artist.score ?? '—'}</div>
                 <div className="text-text-primary font-medium text-sm">{artist.name}</div>
                 <div className="badge-buy text-xs mt-2">{artist.rating}</div>
               </Link>

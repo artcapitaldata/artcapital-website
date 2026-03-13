@@ -112,7 +112,6 @@ export default function HomePage() {
                 { title: 'Cattelan: dopo la banana, il mercato reagisce', date: '7 Mar 2025', tag: 'Analisi' },
                 { title: 'Report Q4 2024: i numeri del mercato', date: '28 Feb 2025', tag: 'Report' },
                 { title: 'Ghenie supera quota 80: Strong Buy', date: '21 Feb 2025', tag: 'Rating' },
-                { title: 'Nara vs KAWS: due traiettorie opposte', date: '14 Feb 2025', tag: 'Confronto' },
               ].map((article) => (
                 <div key={article.title} className="py-4 first:pt-0 last:pb-0">
                   <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">{article.tag}</span>

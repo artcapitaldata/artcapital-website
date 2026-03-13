@@ -49,7 +49,7 @@ export default function HomePage() {
   return (
     <main>
       {/* Masthead — WSJ-style asymmetric editorial */}
-      <section className="container-ac pt-6 md:pt-8 pb-10 md:pb-14">
+      <section className="container-ac pt-12 md:pt-16 pb-10 md:pb-14">
         <div className="rule-thick" />
         <div className="grid md:grid-cols-12 gap-8 md:gap-12 pt-8">
 

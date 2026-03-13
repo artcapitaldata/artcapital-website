@@ -56,8 +56,9 @@ export default function HomePage() {
           {/* Left column — headline + lead */}
           <div className="md:col-span-7 lg:col-span-8">
             <p className="section-label mb-4">Art Market Intelligence</p>
-            <h1 className="font-display font-normal text-text-primary leading-[1.05] tracking-tight text-[2.75rem] md:text-[3.5rem] lg:text-[4.25rem] mb-6">
-              Dati, analisi e indici<br className="hidden lg:block" /> per il mercato dell&apos;arte
+            <h1 className="font-display font-normal text-text-primary leading-[1.05] tracking-tight mb-6">
+              <span className="block text-[3.25rem] md:text-[4.25rem] lg:text-[5rem] mb-2">Art Capital</span>
+              <span className="block text-[2rem] md:text-[2.5rem] lg:text-[3rem] text-text-secondary font-light">Dati, analisi e indici per il mercato dell&apos;arte</span>
             </h1>
             <p className="text-text-secondary text-lg leading-relaxed max-w-xl mb-8">
               Art Capital monitora oltre 500 artisti con score proprietari, indici di prezzo e risultati d&apos;asta verificati dalle principali case internazionali.

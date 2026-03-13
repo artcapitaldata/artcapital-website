@@ -9,7 +9,7 @@ export const metadata: Metadata = {
     template: '%s | Art Capital',
   },
   description:
-    'Il Bloomberg dell\'Arte. Dati di mercato, analisi finanziarie e intelligence per collezionisti e investitori nel mercato dell\'arte.',
+    'Art Market Intelligence. Dati di mercato, analisi finanziarie e intelligence per collezionisti e investitori nel mercato dell\'arte.',
   keywords: [
     'arte', 'mercato dell\'arte', 'aste', 'investimenti arte',
     'art market', 'collezionismo', 'art performance index',
@@ -22,12 +22,12 @@ export const metadata: Metadata = {
     url: 'https://artcapitaldata.com',
     siteName: 'Art Capital',
     title: 'Art Capital | Art Market Intelligence',
-    description: 'Il Bloomberg dell\'Arte. Dati, analisi e intelligence per il mercato dell\'arte.',
+    description: 'Art Market Intelligence. Dati, analisi e intelligence per il mercato dell\'arte.',
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Art Capital | Art Market Intelligence',
-    description: 'Il Bloomberg dell\'Arte.',
+    description: 'Art Market Intelligence.',
   },
 }
 

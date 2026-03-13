@@ -17,6 +17,15 @@ const tickerData = [
   { name: 'Ghenie', change: 22.1, direction: 'up' },
 ];
 
+// DEMO — top 5 artisti per score placeholder
+const topArtists = [
+  { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', score: 87, change: +12.4 },
+  { name: 'Gerhard Richter', slug: 'gerhard-richter', score: 85, change: -1.8 },
+  { name: 'Lucio Fontana', slug: 'lucio-fontana', score: 82, change: +8.2 },
+  { name: 'Adrian Ghenie', slug: 'adrian-ghenie', score: 80, change: +22.1 },
+  { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', score: 78, change: +15.2 },
+];
+
 export default function HomePage() {
   return (
     <main>
@@ -30,55 +39,41 @@ export default function HomePage() {
                 <span className={`font-mono ${item.direction === 'up' ? 'text-positive' : 'text-negative'}`}>
                   {item.direction === 'up' ? '+' : ''}{item.change}%
                 </span>
+                <span className="w-1 h-1 bg-accent rotate-45 ml-2 opacity-40" />
               </span>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Hero — editorial masthead */}
-      <section className="container-ac pt-20 pb-16 md:pt-28 md:pb-20">
-        <div className="grid md:grid-cols-12 gap-8 md:gap-12">
-          <div className="md:col-span-7">
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-display font-normal text-text-primary leading-[1.05] mb-8" style={{ letterSpacing: '-0.02em' }}>
-              Art Capital
-            </h1>
-            <p className="text-lg md:text-xl text-text-secondary leading-relaxed max-w-lg">
-              Market intelligence per il mercato dell&apos;arte contemporanea. Dati, analisi e indici di performance per investitori e collezionisti.
-            </p>
+      {/* Masthead */}
+      <section className="container-ac pt-16 md:pt-24">
+        <div className="text-center pb-12 md:pb-16">
+          <p className="section-label mb-5">Art Market Intelligence</p>
+          <h1 className="font-display font-normal text-text-primary leading-none tracking-tight text-6xl md:text-7xl lg:text-[6.5rem]">
+            Art Capital
+          </h1>
+          {/* Gold accent line under title */}
+          <div className="flex justify-center mt-5">
+            <div className="w-12 h-[2px] bg-accent" />
           </div>
-          <div className="md:col-span-5 md:pt-4">
-            <div className="space-y-8">
-              <div>
-                <p className="section-label mb-3">Art Performance Index</p>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Punteggio 0–100 calcolato su momentum, profondità di mercato, riconoscimento istituzionale e consistenza dei risultati d&apos;asta.
-                </p>
-              </div>
-              <div className="rule" />
-              <div>
-                <p className="section-label mb-3">Database</p>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Oltre 500 artisti con dati verificati da Christie&apos;s, Sotheby&apos;s, Phillips e le principali case d&apos;asta.
-                </p>
-              </div>
-              <div className="rule" />
-              <div className="flex gap-4">
-                <Link href="/artisti" className="btn-primary gap-2">
-                  Esplora il Database <ArrowRight className="w-4 h-4" />
-                </Link>
-                <Link href="/newsletter" className="btn-secondary">
-                  Newsletter
-                </Link>
-              </div>
-            </div>
+          <p className="text-lg text-text-secondary mt-5 max-w-md mx-auto leading-relaxed">
+            Dati, analisi e indici di performance per investitori e collezionisti nel mercato dell&apos;arte contemporanea.
+          </p>
+          <div className="flex gap-4 justify-center mt-10">
+            <Link href="/artisti" className="btn-primary gap-2">
+              Esplora il Database <ArrowRight className="w-4 h-4" />
+            </Link>
+            <Link href="/newsletter" className="btn-secondary">
+              Newsletter
+            </Link>
           </div>
         </div>
       </section>
 
       {/* Key Numbers */}
-      <section className="bg-surface">
-        <div className="container-ac py-14">
+      <section className="border-y border-border bg-surface">
+        <div className="container-ac py-10">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
             {[
               { value: '$11.1B', label: 'Volume Mercato 2024' },
@@ -87,7 +82,7 @@ export default function HomePage() {
               { value: '10+', label: "Case d'Asta" },
             ].map((stat) => (
               <div key={stat.label}>
-                <div className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-1">{stat.value}</div>
+                <div className="text-3xl md:text-4xl font-mono font-semibold text-text-primary mb-1">{stat.value}</div>
                 <div className="text-text-secondary text-sm">{stat.label}</div>
               </div>
             ))}
@@ -95,44 +90,108 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* What We Offer — editorial columns, NOT feature cards */}
-      <section className="container-ac py-20 md:py-24">
-        <div className="rule-thick mb-4" />
-        <h2 className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-12">
-          Strumenti per decisioni informate
-        </h2>
-        <div className="grid md:grid-cols-3 gap-0">
-          {[
-            { title: 'Price Index', text: 'Indici di prezzo storici normalizzati per ogni artista. Visualizza trend dal 2000 ad oggi con grafici finanziari.' },
-            { title: 'Art Performance Index', text: 'Score 0–100 che sintetizza momentum di mercato, profondità, riconoscimento e consistenza in un unico numero.' },
-            { title: 'Alert & Newsletter', text: 'Market Pulse settimanale e notifiche personalizzate su variazioni di prezzo e cambi di rating nella tua watchlist.' },
-          ].map((item, i) => (
-            <div key={item.title} className={`py-6 ${i > 0 ? 'md:pl-8 md:border-l md:border-border' : ''}`}>
-              <h3 className="text-lg font-display font-normal text-text-primary mb-2">{item.title}</h3>
-              <p className="text-text-secondary text-sm leading-relaxed">{item.text}</p>
+      {/* Diamond separator */}
+      <div className="diamond-sep container-ac"><span /></div>
+
+      {/* Two-column editorial: Top Artists + What is Art Capital */}
+      <section className="container-ac py-12 md:py-20">
+        <div className="grid md:grid-cols-12 gap-12 md:gap-16">
+
+          {/* Left: Top Artists ranking */}
+          <div className="md:col-span-7">
+            <div className="rule-double mb-8" />
+            <h2 className="section-label mb-6">Top Artisti per API Score</h2>
+            <table className="w-full">
+              <thead>
+                <tr className="border-b-2 border-text-primary">
+                  <th className="text-left py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Artista</th>
+                  <th className="text-right py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Score</th>
+                  <th className="text-right py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Var.</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topArtists.map((artist, i) => (
+                  <tr key={artist.slug} className={`border-b border-border ${i % 2 === 1 ? 'bg-surface/60' : ''}`}>
+                    <td className="py-4 pr-4">
+                      <Link href={`/artisti/${artist.slug}`} className="text-text-primary font-medium hover:text-accent transition-colors">
+                        {artist.name}
+                      </Link>
+                    </td>
+                    <td className="py-4 text-right">
+                      <span className="font-mono font-bold text-accent text-lg">{artist.score}</span>
+                    </td>
+                    <td className="py-4 text-right">
+                      <span className={`font-mono text-sm font-semibold ${artist.change >= 0 ? 'text-positive' : 'text-negative'}`}>
+                        {artist.change >= 0 ? '+' : ''}{artist.change}%
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <div className="mt-4">
+              <Link href="/artisti" className="text-sm text-text-secondary hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                Vedi tutti gli artisti <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
-          ))}
+          </div>
+
+          {/* Right: What is Art Capital */}
+          <div className="md:col-span-5">
+            <div className="rule-double mb-8" />
+            <h2 className="section-label mb-6">La piattaforma</h2>
+            <div className="space-y-6">
+              <div>
+                <h3 className="text-base font-semibold text-text-primary mb-1.5">Art Performance Index</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Punteggio 0–100 calcolato su momentum, profondità di mercato, riconoscimento istituzionale e consistenza dei risultati d&apos;asta.
+                </p>
+              </div>
+              <div className="border-t border-border" />
+              <div>
+                <h3 className="text-base font-semibold text-text-primary mb-1.5">Price Index</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Indici di prezzo storici normalizzati dal 2000 ad oggi. Grafici finanziari per ogni artista nel database.
+                </p>
+              </div>
+              <div className="border-t border-border" />
+              <div>
+                <h3 className="text-base font-semibold text-text-primary mb-1.5">Dati Verificati</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Risultati da Christie&apos;s, Sotheby&apos;s, Phillips e le principali case d&apos;asta. Nessun dato inventato.
+                </p>
+              </div>
+              <div className="border-t border-border" />
+              <div>
+                <h3 className="text-base font-semibold text-text-primary mb-1.5">Alert & Newsletter</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Market Pulse settimanale e notifiche su variazioni di prezzo e cambi di rating nella tua watchlist.
+                </p>
+              </div>
+            </div>
+          </div>
+
         </div>
       </section>
 
-      {/* Artist Preview — editorial card */}
-      <section className="bg-surface">
-        <div className="container-ac py-20 md:py-24">
+      {/* Artist Preview Card */}
+      <section className="bg-surface border-y border-border">
+        <div className="container-ac py-16 md:py-24">
           <div className="grid md:grid-cols-12 gap-12">
             <div className="md:col-span-5">
-              <p className="section-label mb-3">Anteprima</p>
-              <h2 className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-4">
-                Scheda Artista
-              </h2>
-              <p className="text-text-secondary leading-relaxed mb-8">
-                Ogni artista nel database ha una scheda completa con score, breakdown dei fattori, indice di prezzo storico e risultati d&apos;asta verificati.
+              <h2 className="section-label mb-3">Anteprima</h2>
+              <p className="text-2xl md:text-3xl font-display font-normal text-text-primary mb-4 leading-snug">
+                Ogni artista, analizzato come un asset finanziario.
               </p>
-              <Link href="/artisti" className="btn-secondary gap-2 inline-flex">
-                Vedi tutti gli artisti <ArrowRight className="w-4 h-4" />
+              <p className="text-text-secondary leading-relaxed mb-8">
+                Score, breakdown dei fattori, indice di prezzo storico e risultati d&apos;asta verificati. Tutto in una scheda.
+              </p>
+              <Link href="/artisti/jean-michel-basquiat" className="btn-secondary gap-2 inline-flex">
+                Vedi scheda completa <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
             <div className="md:col-span-6 md:col-start-7">
-              <div className="card p-8">
+              <div className="bg-white border border-border p-8" style={{ borderRadius: '4px' }}>
                 <div className="flex items-start justify-between mb-6">
                   <div>
                     <h3 className="text-2xl font-display font-normal text-text-primary">Jean-Michel Basquiat</h3>
@@ -143,7 +202,7 @@ export default function HomePage() {
                     <span className="badge-buy mt-1">Strong Buy</span>
                   </div>
                 </div>
-                <div className="rule mb-5" />
+                <div className="border-t border-border mb-5" />
                 <div className="grid grid-cols-4 gap-4 mb-5">
                   {[
                     { label: 'Momentum', value: 92 },
@@ -157,8 +216,8 @@ export default function HomePage() {
                     </div>
                   ))}
                 </div>
-                <div className="rule mb-5" />
-                <div className="bg-surface p-4" style={{ borderRadius: '2px' }}>
+                <div className="border-t border-border mb-5" />
+                <div className="bg-surface p-4" style={{ borderRadius: '4px' }}>
                   <div className="text-[11px] text-text-secondary uppercase tracking-wider mb-3">Price Index 2000–2025</div>
                   <div className="flex items-end gap-[2px] h-20">
                     {[100,92,108,172,233,322,400,267,194,289,378,472,667,583,544,611,1000,833,750,611,917,1056,944,1000,1111].map((v, i) => (
@@ -176,11 +235,14 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* Diamond separator */}
+      <div className="diamond-sep container-ac"><span /></div>
+
       {/* Newsletter CTA */}
-      <section className="container-ac py-20 md:py-24">
+      <section className="container-ac py-12 md:py-20">
         <div className="max-w-lg mx-auto text-center">
-          <p className="section-label mb-4">Newsletter</p>
-          <h2 className="text-3xl md:text-4xl font-display font-normal text-text-primary mb-4">Art Capital Weekly</h2>
+          <h2 className="section-label mb-4">Newsletter</h2>
+          <p className="text-2xl md:text-3xl font-display font-normal text-text-primary mb-4">Art Capital Weekly</p>
           <p className="text-text-secondary mb-10 leading-relaxed">
             Ogni settimana nella tua inbox: analisi di mercato, artisti sotto i riflettori, risultati d&apos;asta e opportunità.
           </p>

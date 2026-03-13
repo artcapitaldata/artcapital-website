@@ -1,7 +1,7 @@
 # CLAUDE.md - Art Capital Project Instructions
 
 ## Project Overview
-Art Capital (artcapitaldata.com) is an art market intelligence platform - "Il Bloomberg dell'Arte".
+Art Capital (artcapitaldata.com) is an art market intelligence platform.
 It provides market data, analytics, and performance indices for contemporary art investors and collectors.
 
 ## Tech Stack
@@ -96,7 +96,7 @@ Art Capital deve trasmettere **autorevolezza, ricchezza e sobrietà** — come i
 
 - Wall Street Journal (wsj.com) — layout editoriale, tipografia
 - Financial Times (ft.com) — palette calda, autorevolezza
-- Bloomberg Terminal — densità dati, precisione
+- Bloomberg Terminal (solo come riferimento per densità dati e precisione, NON come branding)
 - Artnet/Artsy — solo per la struttura contenuti arte, NON per lo stile
 
 ### Anti-pattern (da EVITARE assolutamente)

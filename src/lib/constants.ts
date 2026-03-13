@@ -5,7 +5,7 @@
 export const SITE = {
   name: 'Art Capital',
   tagline: 'Art Market Intelligence',
-  description: 'Il Bloomberg dell\'Arte. Dati di mercato, analisi finanziarie e intelligence per collezionisti e investitori.',
+  description: 'Art Market Intelligence. Dati di mercato, analisi finanziarie e intelligence per collezionisti e investitori.',
   url: 'https://artcapitaldata.com',
   email: 'info@artcapitaldata.com',
 } as const

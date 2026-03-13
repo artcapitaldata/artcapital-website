@@ -56,13 +56,9 @@ export default function ArtistiPage() {
   return (
     <main className="min-h-screen">
       <div className="container-ac py-12 md:py-16">
-        <div className="rule-thick mb-4" />
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-10">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-2">Database Artisti</h1>
-            <p className="text-text-secondary">{DEMO_ARTISTS.length} artisti contemporanei monitorati</p>
-          </div>
-        </div>
+        <div className="rule-thick mb-8" />
+        <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-2">Database Artisti</h1>
+        <p className="text-text-secondary mb-10">{DEMO_ARTISTS.length} artisti contemporanei monitorati</p>
 
         <div className="flex flex-col sm:flex-row gap-3 mb-6">
           <div className="flex-1">

@@ -41,41 +41,59 @@ export default function DashboardPage() {
   return (
     <main className="min-h-screen">
       <div className="container-ac py-12 md:py-16">
-        <div className="rule-thick mb-4" />
-        <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-2">Dashboard</h1>
-        <p className="text-text-secondary mb-12">Panoramica del mercato dell&apos;arte contemporanea.</p>
-
-        {/* Market Stats */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-16">
-          {MARKET_STATS.map((stat) => (
-            <div key={stat.label}>
-              <div className="text-3xl md:text-4xl font-mono font-bold text-text-primary mb-1">{stat.value}</div>
-              <div className="text-text-secondary text-sm">{stat.label}</div>
-              <div className="text-accent text-xs font-medium mt-1">{stat.sub}</div>
-            </div>
-          ))}
+        {/* Header */}
+        <div className="rule-thick mb-8" />
+        <div className="grid md:grid-cols-12 gap-8 mb-14">
+          <div className="md:col-span-7">
+            <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-2">Dashboard</h1>
+            <p className="text-text-secondary">Panoramica del mercato dell&apos;arte contemporanea.</p>
+          </div>
+          <div className="md:col-span-5 md:border-l md:border-border md:pl-8">
+            <p className="section-label mb-3">Aggiornamento</p>
+            <p className="text-text-secondary text-sm">Dati aggiornati all&apos;ultima sessione d&apos;asta disponibile.</p>
+          </div>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 md:gap-12 mb-16">
-          {/* Top Performers */}
-          <div>
-            <div className="rule-thick mb-4" />
-            <h2 className="section-label mb-6 flex items-center gap-2">
+        {/* Market Stats — newspaper row */}
+        <div className="border-y border-border py-8 mb-14">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+            {MARKET_STATS.map((stat, i) => (
+              <div key={stat.label} className={i > 0 ? 'lg:border-l lg:border-border lg:pl-8' : ''}>
+                <div className="text-3xl md:text-4xl font-mono font-bold text-text-primary leading-none mb-1">{stat.value}</div>
+                <div className="text-text-secondary text-sm">{stat.label}</div>
+                <div className="text-accent text-xs font-medium mt-1">{stat.sub}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Top Performers + In Calo — two-column with vertical border */}
+        <div className="grid md:grid-cols-12 gap-0 mb-14">
+          <div className="md:col-span-7 md:pr-10 lg:pr-14 md:border-r md:border-border">
+            <div className="rule-thick mb-6" />
+            <h2 className="section-label mb-5 flex items-center gap-2">
               <TrendingUp className="w-3.5 h-3.5 text-positive" /> Top Performers
             </h2>
             <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Artista</th>
+                  <th className="text-right py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Score</th>
+                  <th className="text-right py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Var. %</th>
+                </tr>
+              </thead>
               <tbody>
                 {TOP_MOVERS_UP.map((artist, i) => (
                   <tr key={artist.slug} className={`border-b border-border ${i % 2 === 1 ? 'bg-surface/50' : ''}`}>
-                    <td className="py-3 pr-3">
+                    <td className="py-3.5 pr-3">
                       <Link href={`/artisti/${artist.slug}`} className="text-text-primary font-medium hover:text-accent transition-colors">
                         {artist.name}
                       </Link>
                     </td>
-                    <td className="py-3 pr-3 text-right">
-                      <span className="font-mono text-xs text-text-secondary">{artist.score}</span>
+                    <td className="py-3.5 pr-3 text-right">
+                      <span className="font-mono text-sm text-text-secondary">{artist.score}</span>
                     </td>
-                    <td className="py-3 text-right">
+                    <td className="py-3.5 text-right">
                       <span className="text-positive font-mono text-sm font-semibold">+{artist.change}%</span>
                     </td>
                   </tr>
@@ -84,47 +102,52 @@ export default function DashboardPage() {
             </table>
           </div>
 
-          {/* In Calo */}
-          <div>
-            <div className="rule-thick mb-4" />
-            <h2 className="section-label mb-6 flex items-center gap-2">
+          <div className="md:col-span-5 md:pl-10 lg:pl-14 mt-10 md:mt-0">
+            <div className="rule-thick mb-6" />
+            <h2 className="section-label mb-5 flex items-center gap-2">
               <TrendingDown className="w-3.5 h-3.5 text-negative" /> In Calo
             </h2>
             <table className="w-full text-sm">
+              <thead>
+                <tr className="border-b border-border">
+                  <th className="text-left py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Artista</th>
+                  <th className="text-right py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Score</th>
+                  <th className="text-right py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Var. %</th>
+                </tr>
+              </thead>
               <tbody>
                 {TOP_MOVERS_DOWN.map((artist, i) => (
                   <tr key={artist.slug} className={`border-b border-border ${i % 2 === 1 ? 'bg-surface/50' : ''}`}>
-                    <td className="py-3 pr-3">
+                    <td className="py-3.5 pr-3">
                       <Link href={`/artisti/${artist.slug}`} className="text-text-primary font-medium hover:text-accent transition-colors">
                         {artist.name}
                       </Link>
                     </td>
-                    <td className="py-3 pr-3 text-right">
-                      <span className="font-mono text-xs text-text-secondary">{artist.score}</span>
+                    <td className="py-3.5 pr-3 text-right">
+                      <span className="font-mono text-sm text-text-secondary">{artist.score}</span>
                     </td>
-                    <td className="py-3 text-right">
+                    <td className="py-3.5 text-right">
                       <span className="text-negative font-mono text-sm font-semibold">{artist.change}%</span>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-            <p className="text-text-secondary text-xs mt-4">Dati aggiornati all&apos;ultima sessione d&apos;asta disponibile.</p>
           </div>
         </div>
 
         {/* Watchlist */}
-        <div className="rule-thick mb-4" />
+        <div className="rule-thick mb-6" />
         <div className="flex items-center justify-between mb-6">
           <h2 className="section-label">La Tua Watchlist</h2>
           <span className="text-xs text-text-secondary border border-border px-2 py-0.5" style={{ borderRadius: '2px' }}>Demo</span>
         </div>
-        <div className="grid sm:grid-cols-3 gap-6">
-          {WATCHLIST.map((artist) => (
+        <div className="grid sm:grid-cols-3 gap-0 border border-border" style={{ borderRadius: '2px' }}>
+          {WATCHLIST.map((artist, i) => (
             <Link
               key={artist.slug}
               href={`/artisti/${artist.slug}`}
-              className="card-hover p-6 text-center"
+              className={`p-6 text-center hover:bg-surface transition-colors ${i > 0 ? 'border-t sm:border-t-0 sm:border-l border-border' : ''}`}
             >
               <div className="text-4xl font-mono font-bold text-accent mb-2">{artist.score}</div>
               <div className="text-text-primary font-medium text-sm mb-2">{artist.name}</div>
@@ -132,7 +155,7 @@ export default function DashboardPage() {
             </Link>
           ))}
         </div>
-        <p className="text-text-secondary text-xs mt-6 text-center">Accedi per personalizzare la tua watchlist.</p>
+        <p className="text-text-secondary text-xs mt-4 text-center">Accedi per personalizzare la tua watchlist.</p>
       </div>
     </main>
   )

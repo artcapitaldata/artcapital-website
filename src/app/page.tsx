@@ -104,21 +104,27 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Right column — key numbers stacked */}
+          {/* Right column — latest articles */}
           <div className="md:col-span-5 lg:col-span-4 md:border-l md:border-border md:pl-8 lg:pl-12">
-            <p className="section-label mb-5">Numeri Chiave</p>
-            <div className="space-y-6">
+            <p className="section-label mb-5">Ultimi Articoli</p>
+            <div className="divide-y divide-border">
               {[
-                { value: '$11.1B', label: 'Volume Mercato 2024' },
-                { value: '867K', label: 'Opere Vendute' },
-                { value: '500+', label: 'Artisti Monitorati' },
-                { value: '10+', label: "Case d'Asta Tracciate" },
-              ].map((stat) => (
-                <div key={stat.label} className="border-b border-border pb-4 last:border-0 last:pb-0">
-                  <div className="text-3xl font-mono font-bold text-text-primary leading-none mb-1">{stat.value}</div>
-                  <div className="text-text-secondary text-sm">{stat.label}</div>
+                { title: 'Cattelan: dopo la banana, il mercato reagisce', date: '7 Mar 2025', tag: 'Analisi' },
+                { title: 'Report Q4 2024: i numeri del mercato', date: '28 Feb 2025', tag: 'Report' },
+                { title: 'Ghenie supera quota 80: Strong Buy', date: '21 Feb 2025', tag: 'Rating' },
+                { title: 'Nara vs KAWS: due traiettorie opposte', date: '14 Feb 2025', tag: 'Confronto' },
+              ].map((article) => (
+                <div key={article.title} className="py-4 first:pt-0 last:pb-0">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">{article.tag}</span>
+                  <h3 className="text-sm font-medium text-text-primary mt-1 leading-snug">{article.title}</h3>
+                  <span className="text-text-secondary text-xs mt-1 block">{article.date}</span>
                 </div>
               ))}
+            </div>
+            <div className="mt-4">
+              <Link href="/newsletter" className="text-sm text-text-secondary hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                Tutti gli articoli <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
             </div>
           </div>
 

@@ -32,14 +32,26 @@ export default function PricingPage() {
     <main className="min-h-screen">
       <div className="container-ac py-12 md:py-16">
         <div className="max-w-4xl mx-auto">
-          <div className="rule-thick mb-4" />
-          <div className="text-center mb-16">
-            <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-4">Piani e Prezzi</h1>
-            <p className="text-text-secondary text-lg max-w-lg mx-auto leading-relaxed">
-              Scegli il piano pi&ugrave; adatto alle tue esigenze. Upgrade o cancellazione in qualsiasi momento.
-            </p>
+          {/* Header — asymmetric */}
+          <div className="rule-thick mb-8" />
+          <div className="grid md:grid-cols-12 gap-8 mb-14">
+            <div className="md:col-span-7">
+              <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-3">Piani e Prezzi</h1>
+              <p className="text-text-secondary text-lg leading-relaxed">
+                Scegli il piano pi&ugrave; adatto. Upgrade o cancellazione in qualsiasi momento.
+              </p>
+            </div>
+            <div className="md:col-span-5 md:border-l md:border-border md:pl-8 flex items-end">
+              <p className="text-text-secondary text-sm">
+                Hai domande? Scrivici a{' '}
+                <a href="mailto:admin@artcapitaldata.com" className="text-accent hover:underline">
+                  admin@artcapitaldata.com
+                </a>
+              </p>
+            </div>
           </div>
 
+          {/* Pricing grid */}
           <div className="grid md:grid-cols-3 gap-0 border border-border" style={{ borderRadius: '2px' }}>
             {tiers.map((tier, i) => (
               <div
@@ -84,15 +96,6 @@ export default function PricingPage() {
                 </button>
               </div>
             ))}
-          </div>
-
-          <div className="text-center mt-14">
-            <p className="text-text-secondary text-sm">
-              Hai domande? Scrivici a{' '}
-              <a href="mailto:info@artcapitaldata.com" className="text-accent hover:underline">
-                info@artcapitaldata.com
-              </a>
-            </p>
           </div>
         </div>
       </div>

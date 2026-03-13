@@ -12,7 +12,7 @@ export default function Header() {
     <header className="fixed top-0 w-full z-50 bg-white/95 backdrop-blur-sm border-b border-border">
       <div className="container-ac flex items-center justify-between h-14">
         <Link href="/" className="group">
-          <span className="text-xl font-display font-normal text-text-primary tracking-tight">
+          <span className="text-2xl font-display font-normal text-text-primary tracking-tight">
             Art Capital
           </span>
         </Link>

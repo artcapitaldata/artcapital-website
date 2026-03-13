@@ -61,61 +61,62 @@ export default function NewsletterPage() {
   return (
     <main className="min-h-screen">
       <div className="container-ac py-12 md:py-16">
-        <div className="max-w-2xl mx-auto">
-          <div className="rule-thick mb-4" />
-          <div className="text-center mb-14">
-            <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-4">Art Capital Weekly</h1>
-            <p className="text-text-secondary text-lg leading-relaxed max-w-lg mx-auto">
+        {/* Header — asymmetric like WSJ */}
+        <div className="rule-thick mb-8" />
+        <div className="grid md:grid-cols-12 gap-8 md:gap-12 mb-14">
+          <div className="md:col-span-7">
+            <h1 className="text-4xl md:text-5xl font-display font-normal text-text-primary mb-3">Art Capital Weekly</h1>
+            <p className="text-text-secondary text-lg leading-relaxed max-w-lg">
               Ogni settimana: analisi di mercato, deep dive su artisti, risultati d&apos;asta e opportunit&agrave;.
             </p>
           </div>
-
-          {/* Subscribe CTA */}
-          <div className="bg-surface border border-border p-8 md:p-10 mb-16 text-center" style={{ borderRadius: '2px' }}>
-            <h2 className="text-xl font-display font-normal text-text-primary mb-2">Iscriviti alla Newsletter</h2>
-            <p className="text-text-secondary text-sm mb-6">Gratis. Niente spam. Cancellati quando vuoi.</p>
-            <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+          <div className="md:col-span-5 md:border-l md:border-border md:pl-8">
+            <p className="section-label mb-3">Iscriviti</p>
+            <p className="text-text-secondary text-sm mb-4">Gratis. Niente spam. Cancellati quando vuoi.</p>
+            <form className="flex gap-2">
               <input
                 type="email"
                 placeholder="La tua email"
-                className="flex-1 border border-border px-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-text-primary bg-white text-sm"
+                className="flex-1 border border-border px-3 py-2.5 text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-text-primary bg-white text-sm"
                 style={{ borderRadius: '2px' }}
               />
-              <button type="submit" className="btn-primary whitespace-nowrap">
+              <button type="submit" className="btn-primary text-xs py-2.5 px-4 whitespace-nowrap">
                 Iscriviti
               </button>
             </form>
           </div>
+        </div>
 
-          {/* Archive */}
-          <div className="rule-thick mb-4" />
-          <h2 className="section-label mb-8">Archivio</h2>
-          <div className="divide-y divide-border">
-            {DEMO_ISSUES.map((issue) => (
-              <article key={issue.number} className="py-6 first:pt-0">
-                <div className="flex items-start justify-between gap-6">
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3 mb-2">
-                      <span className="text-xs font-mono text-text-secondary">N.{issue.number}</span>
-                      <span className="text-xs text-text-secondary">
-                        {new Date(issue.publishedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' })}
-                      </span>
-                      {issue.isPremium && (
-                        <span className="inline-flex items-center gap-1 text-[11px] px-2 py-0.5 text-accent font-semibold border border-accent/20" style={{ borderRadius: '2px', backgroundColor: 'rgba(201, 168, 76, 0.06)' }}>
-                          <Lock className="w-3 h-3" /> Premium
-                        </span>
-                      )}
-                    </div>
-                    <h3 className="text-lg font-display font-normal text-text-primary mb-1.5">{issue.title}</h3>
-                    <p className="text-text-secondary text-sm leading-relaxed">{issue.summary}</p>
-                  </div>
-                  <Link href="#" className="shrink-0 mt-2 text-text-secondary hover:text-text-primary transition-colors">
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+        {/* Archive — editorial list */}
+        <div className="rule-thick mb-6" />
+        <h2 className="section-label mb-6">Archivio</h2>
+        <div className="divide-y divide-border">
+          {DEMO_ISSUES.map((issue) => (
+            <article key={issue.number} className="grid md:grid-cols-12 gap-4 md:gap-8 py-6 first:pt-0">
+              <div className="md:col-span-2">
+                <div className="flex md:flex-col items-center md:items-start gap-2 md:gap-1">
+                  <span className="text-xs font-mono text-text-secondary">N.{issue.number}</span>
+                  <span className="text-xs text-text-secondary">
+                    {new Date(issue.publishedAt).toLocaleDateString('it-IT', { day: 'numeric', month: 'short', year: 'numeric' })}
+                  </span>
+                  {issue.isPremium && (
+                    <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 font-semibold border" style={{ color: '#C9A84C', borderColor: 'rgba(201, 168, 76, 0.25)', backgroundColor: 'rgba(201, 168, 76, 0.06)', borderRadius: '2px' }}>
+                      <Lock className="w-2.5 h-2.5" /> Premium
+                    </span>
+                  )}
                 </div>
-              </article>
-            ))}
-          </div>
+              </div>
+              <div className="md:col-span-9">
+                <h3 className="text-lg font-display font-normal text-text-primary mb-1.5">{issue.title}</h3>
+                <p className="text-text-secondary text-sm leading-relaxed">{issue.summary}</p>
+              </div>
+              <div className="md:col-span-1 flex items-start justify-end">
+                <Link href="/newsletter" className="text-text-secondary hover:text-text-primary transition-colors">
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </article>
+          ))}
         </div>
       </div>
     </main>

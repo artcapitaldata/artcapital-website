@@ -7,7 +7,7 @@ export const SITE = {
   tagline: 'Art Market Intelligence',
   description: 'Art Market Intelligence. Dati di mercato, analisi finanziarie e intelligence per collezionisti e investitori.',
   url: 'https://artcapitaldata.com',
-  email: 'info@artcapitaldata.com',
+  email: 'admin@artcapitaldata.com',
 } as const
 
 export const NAV_LINKS = [

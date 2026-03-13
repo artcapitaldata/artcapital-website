@@ -1,22 +1,6 @@
 import { ArrowRight, Lock, FileText, TrendingUp, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
-// DEMO — variazioni percentuali placeholder
-const tickerData = [
-  { name: 'Basquiat', change: 12.4, direction: 'up' },
-  { name: 'Fontana', change: 8.2, direction: 'up' },
-  { name: 'Banksy', change: -3.1, direction: 'down' },
-  { name: 'Koons', change: 5.7, direction: 'up' },
-  { name: 'Richter', change: -1.8, direction: 'down' },
-  { name: 'Hirst', change: 0.4, direction: 'up' },
-  { name: 'Cattelan', change: 15.2, direction: 'up' },
-  { name: 'Nara', change: 9.6, direction: 'up' },
-  { name: 'KAWS', change: -4.5, direction: 'down' },
-  { name: 'Boetti', change: 6.8, direction: 'up' },
-  { name: 'Morandi', change: 3.2, direction: 'up' },
-  { name: 'Ghenie', change: 22.1, direction: 'up' },
-];
-
 // DEMO — top 5 artisti per score placeholder
 const topArtists = [
   { name: 'Jean-Michel Basquiat', slug: 'jean-michel-basquiat', score: 87, change: +12.4 },
@@ -64,24 +48,8 @@ const recentAuctions = [
 export default function HomePage() {
   return (
     <main>
-      {/* Ticker */}
-      <div className="border-b border-border overflow-hidden">
-        <div className="ticker-wrap">
-          <div className="ticker">
-            {[...tickerData, ...tickerData].map((item, i) => (
-              <span key={i} className="inline-flex items-center gap-1.5 px-5 py-2 text-[13px]">
-                <span className="text-text-primary font-medium">{item.name}</span>
-                <span className={`font-mono ${item.direction === 'up' ? 'text-positive' : 'text-negative'}`}>
-                  {item.direction === 'up' ? '+' : ''}{item.change}%
-                </span>
-              </span>
-            ))}
-          </div>
-        </div>
-      </div>
-
       {/* Masthead — WSJ-style asymmetric editorial */}
-      <section className="container-ac pt-12 md:pt-16 pb-10 md:pb-14">
+      <section className="container-ac pt-6 md:pt-8 pb-10 md:pb-14">
         <div className="rule-thick" />
         <div className="grid md:grid-cols-12 gap-8 md:gap-12 pt-8">
 

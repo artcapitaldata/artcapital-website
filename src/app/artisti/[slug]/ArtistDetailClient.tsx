@@ -44,8 +44,8 @@ export default function ArtistDetailClient({ artist }: { artist: ArtistData }) {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-normal text-text-primary mb-4 leading-[1.1]">{artist.name}</h1>
             <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-text-secondary text-sm mb-4">
               <span>{artist.nationality}</span>
-              {years && <><span className="text-border">|</span><span>{years}</span></>}
-              <span className="text-border">|</span>
+              {years && <><span className="text-text-secondary/40">|</span><span>{years}</span></>}
+              <span className="text-text-secondary/40">|</span>
               <span>{artist.medium.join(', ')}</span>
             </div>
             <div className="flex flex-wrap gap-2 mb-6">

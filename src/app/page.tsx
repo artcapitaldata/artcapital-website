@@ -26,6 +26,13 @@ const topArtists = [
   { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', score: 78, change: +15.2 },
 ];
 
+// DEMO — recent auction highlights placeholder
+const recentAuctions = [
+  { artist: 'Jean-Michel Basquiat', title: 'El Gran Espectaculo', house: "Christie's", price: '$67.1M', date: 'Nov 2024' },
+  { artist: 'Gerhard Richter', title: 'Abstraktes Bild (599)', house: "Sotheby's", price: '$46.3M', date: 'Oct 2024' },
+  { artist: 'Maurizio Cattelan', title: 'Comedian', house: "Sotheby's", price: '$6.2M', date: 'Nov 2024' },
+];
+
 export default function HomePage() {
   return (
     <main>
@@ -39,147 +46,180 @@ export default function HomePage() {
                 <span className={`font-mono ${item.direction === 'up' ? 'text-positive' : 'text-negative'}`}>
                   {item.direction === 'up' ? '+' : ''}{item.change}%
                 </span>
-                <span className="w-1 h-1 bg-accent rotate-45 ml-2 opacity-40" />
               </span>
             ))}
           </div>
         </div>
       </div>
 
-      {/* Masthead */}
-      <section className="container-ac pt-16 md:pt-24">
-        <div className="text-center pb-12 md:pb-16">
-          <p className="section-label mb-5">Art Market Intelligence</p>
-          <h1 className="font-display font-normal text-text-primary leading-none tracking-tight text-6xl md:text-7xl lg:text-[6.5rem]">
-            Art Capital
-          </h1>
-          {/* Gold accent line under title */}
-          <div className="flex justify-center mt-5">
-            <div className="w-12 h-[2px] bg-accent" />
-          </div>
-          <p className="text-lg text-text-secondary mt-5 max-w-md mx-auto leading-relaxed">
-            Dati, analisi e indici di performance per investitori e collezionisti nel mercato dell&apos;arte contemporanea.
-          </p>
-          <div className="flex gap-4 justify-center mt-10">
-            <Link href="/artisti" className="btn-primary gap-2">
-              Esplora il Database <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link href="/newsletter" className="btn-secondary">
-              Newsletter
-            </Link>
-          </div>
-        </div>
-      </section>
+      {/* Masthead — WSJ-style asymmetric editorial */}
+      <section className="container-ac pt-12 md:pt-16 pb-10 md:pb-14">
+        <div className="rule-thick" />
+        <div className="grid md:grid-cols-12 gap-8 md:gap-12 pt-8">
 
-      {/* Key Numbers */}
-      <section className="border-y border-border bg-surface">
-        <div className="container-ac py-10">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
-            {[
-              { value: '$11.1B', label: 'Volume Mercato 2024' },
-              { value: '867K', label: 'Opere Vendute' },
-              { value: '500+', label: 'Artisti Monitorati' },
-              { value: '10+', label: "Case d'Asta" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <div className="text-3xl md:text-4xl font-mono font-semibold text-text-primary mb-1">{stat.value}</div>
-                <div className="text-text-secondary text-sm">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Diamond separator */}
-      <div className="diamond-sep container-ac"><span /></div>
-
-      {/* Two-column editorial: Top Artists + What is Art Capital */}
-      <section className="container-ac py-12 md:py-20">
-        <div className="grid md:grid-cols-12 gap-12 md:gap-16">
-
-          {/* Left: Top Artists ranking */}
-          <div className="md:col-span-7">
-            <div className="rule-double mb-8" />
-            <h2 className="section-label mb-6">Top Artisti per API Score</h2>
-            <table className="w-full">
-              <thead>
-                <tr className="border-b-2 border-text-primary">
-                  <th className="text-left py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Artista</th>
-                  <th className="text-right py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Score</th>
-                  <th className="text-right py-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Var.</th>
-                </tr>
-              </thead>
-              <tbody>
-                {topArtists.map((artist, i) => (
-                  <tr key={artist.slug} className={`border-b border-border ${i % 2 === 1 ? 'bg-surface/60' : ''}`}>
-                    <td className="py-4 pr-4">
-                      <Link href={`/artisti/${artist.slug}`} className="text-text-primary font-medium hover:text-accent transition-colors">
-                        {artist.name}
-                      </Link>
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className="font-mono font-bold text-accent text-lg">{artist.score}</span>
-                    </td>
-                    <td className="py-4 text-right">
-                      <span className={`font-mono text-sm font-semibold ${artist.change >= 0 ? 'text-positive' : 'text-negative'}`}>
-                        {artist.change >= 0 ? '+' : ''}{artist.change}%
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="mt-4">
-              <Link href="/artisti" className="text-sm text-text-secondary hover:text-text-primary transition-colors inline-flex items-center gap-1">
-                Vedi tutti gli artisti <ArrowRight className="w-3.5 h-3.5" />
+          {/* Left column — headline + lead */}
+          <div className="md:col-span-7 lg:col-span-8">
+            <p className="section-label mb-4">Art Market Intelligence</p>
+            <h1 className="font-display font-normal text-text-primary leading-[1.05] tracking-tight text-[2.75rem] md:text-[3.5rem] lg:text-[4.25rem] mb-6">
+              Dati, analisi e indici<br className="hidden lg:block" /> per il mercato dell&apos;arte
+            </h1>
+            <p className="text-text-secondary text-lg leading-relaxed max-w-xl mb-8">
+              Art Capital monitora oltre 500 artisti con score proprietari, indici di prezzo e risultati d&apos;asta verificati dalle principali case internazionali.
+            </p>
+            <div className="flex flex-wrap gap-4">
+              <Link href="/artisti" className="btn-primary gap-2">
+                Esplora il Database <ArrowRight className="w-4 h-4" />
+              </Link>
+              <Link href="/pricing" className="btn-secondary">
+                Piani e Prezzi
               </Link>
             </div>
           </div>
 
-          {/* Right: What is Art Capital */}
-          <div className="md:col-span-5">
-            <div className="rule-double mb-8" />
-            <h2 className="section-label mb-6">La piattaforma</h2>
+          {/* Right column — key numbers stacked */}
+          <div className="md:col-span-5 lg:col-span-4 md:border-l md:border-border md:pl-8 lg:pl-12">
+            <p className="section-label mb-5">Numeri Chiave</p>
             <div className="space-y-6">
-              <div>
-                <h3 className="text-base font-semibold text-text-primary mb-1.5">Art Performance Index</h3>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Punteggio 0–100 calcolato su momentum, profondità di mercato, riconoscimento istituzionale e consistenza dei risultati d&apos;asta.
-                </p>
-              </div>
-              <div className="border-t border-border" />
-              <div>
-                <h3 className="text-base font-semibold text-text-primary mb-1.5">Price Index</h3>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Indici di prezzo storici normalizzati dal 2000 ad oggi. Grafici finanziari per ogni artista nel database.
-                </p>
-              </div>
-              <div className="border-t border-border" />
-              <div>
-                <h3 className="text-base font-semibold text-text-primary mb-1.5">Dati Verificati</h3>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Risultati da Christie&apos;s, Sotheby&apos;s, Phillips e le principali case d&apos;asta. Nessun dato inventato.
-                </p>
-              </div>
-              <div className="border-t border-border" />
-              <div>
-                <h3 className="text-base font-semibold text-text-primary mb-1.5">Alert & Newsletter</h3>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Market Pulse settimanale e notifiche su variazioni di prezzo e cambi di rating nella tua watchlist.
-                </p>
-              </div>
+              {[
+                { value: '$11.1B', label: 'Volume Mercato 2024' },
+                { value: '867K', label: 'Opere Vendute' },
+                { value: '500+', label: 'Artisti Monitorati' },
+                { value: '10+', label: "Case d'Asta Tracciate" },
+              ].map((stat) => (
+                <div key={stat.label} className="border-b border-border pb-4 last:border-0 last:pb-0">
+                  <div className="text-3xl font-mono font-bold text-text-primary leading-none mb-1">{stat.value}</div>
+                  <div className="text-text-secondary text-sm">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
 
         </div>
       </section>
 
-      {/* Artist Preview Card */}
+      {/* Top Artists ranking + Latest Auctions — newspaper two-column */}
+      <section className="border-t border-border">
+        <div className="container-ac py-12 md:py-16">
+          <div className="grid md:grid-cols-12 gap-0">
+
+            {/* Left: Top Artists */}
+            <div className="md:col-span-7 md:pr-10 lg:pr-14 md:border-r md:border-border">
+              <div className="rule-thick mb-6" />
+              <h2 className="section-label mb-5">Top Artisti per API Score</h2>
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b border-border">
+                    <th className="text-left py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Artista</th>
+                    <th className="text-right py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Score</th>
+                    <th className="text-right py-2.5 text-[11px] font-semibold text-text-secondary uppercase tracking-wider">Var. %</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {topArtists.map((artist, i) => (
+                    <tr key={artist.slug} className={`border-b border-border ${i % 2 === 1 ? 'bg-surface/60' : ''}`}>
+                      <td className="py-3.5 pr-4">
+                        <Link href={`/artisti/${artist.slug}`} className="text-text-primary font-medium hover:text-accent transition-colors">
+                          {artist.name}
+                        </Link>
+                      </td>
+                      <td className="py-3.5 text-right">
+                        <span className="font-mono font-bold text-accent text-lg">{artist.score}</span>
+                      </td>
+                      <td className="py-3.5 text-right">
+                        <span className={`font-mono text-sm font-semibold ${artist.change >= 0 ? 'text-positive' : 'text-negative'}`}>
+                          {artist.change >= 0 ? '+' : ''}{artist.change}%
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <div className="mt-4">
+                <Link href="/artisti" className="text-sm text-text-secondary hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                  Vedi tutti gli artisti <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+            {/* Right: Latest Auctions + Newsletter */}
+            <div className="md:col-span-5 md:pl-10 lg:pl-14 mt-10 md:mt-0">
+              <div className="rule-thick mb-6" />
+              <h2 className="section-label mb-5">Aste Recenti</h2>
+              <div className="divide-y divide-border">
+                {recentAuctions.map((auction, i) => (
+                  <div key={i} className="py-4 first:pt-0">
+                    <div className="flex items-baseline justify-between gap-4 mb-1">
+                      <span className="text-text-primary font-medium text-sm">{auction.artist}</span>
+                      <span className="font-mono font-bold text-accent text-sm whitespace-nowrap">{auction.price}</span>
+                    </div>
+                    <p className="text-text-secondary text-xs">{auction.title}</p>
+                    <p className="text-text-secondary text-xs mt-0.5">{auction.house} &middot; {auction.date}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Newsletter inline CTA */}
+              <div className="mt-10">
+                <div className="rule-thick mb-6" />
+                <h3 className="section-label mb-3">Newsletter</h3>
+                <p className="text-text-primary font-display text-xl font-normal mb-2">Art Capital Weekly</p>
+                <p className="text-text-secondary text-sm leading-relaxed mb-5">
+                  Analisi di mercato, artisti sotto i riflettori e risultati d&apos;asta. Ogni settimana.
+                </p>
+                <form className="flex gap-2">
+                  <input
+                    type="email"
+                    placeholder="La tua email"
+                    className="flex-1 border border-border px-3 py-2.5 text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-text-primary transition-colors bg-white text-sm"
+                    style={{ borderRadius: '2px' }}
+                  />
+                  <button type="submit" className="btn-primary text-xs py-2.5 px-4 whitespace-nowrap">
+                    Iscriviti
+                  </button>
+                </form>
+                <p className="text-text-secondary text-[11px] mt-2">Gratis. Niente spam.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* La Piattaforma — three features in editorial columns */}
       <section className="bg-surface border-y border-border">
-        <div className="container-ac py-16 md:py-24">
-          <div className="grid md:grid-cols-12 gap-12">
+        <div className="container-ac py-12 md:py-16">
+          <div className="rule-thick mb-6" />
+          <h2 className="section-label mb-8">La Piattaforma</h2>
+          <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+            <div>
+              <h3 className="text-lg font-display font-normal text-text-primary mb-2">Art Performance Index</h3>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                Score 0–100 calcolato su momentum, profondità di mercato, riconoscimento istituzionale e consistenza dei risultati d&apos;asta.
+              </p>
+            </div>
+            <div className="md:border-l md:border-border md:pl-8">
+              <h3 className="text-lg font-display font-normal text-text-primary mb-2">Price Index</h3>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                Indici di prezzo storici normalizzati dal 2000 ad oggi. Grafici finanziari per ogni artista nel database.
+              </p>
+            </div>
+            <div className="md:border-l md:border-border md:pl-8">
+              <h3 className="text-lg font-display font-normal text-text-primary mb-2">Dati Verificati</h3>
+              <p className="text-text-secondary text-sm leading-relaxed">
+                Risultati da Christie&apos;s, Sotheby&apos;s, Phillips e le principali case d&apos;asta. Nessun dato inventato.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Artist Preview — Basquiat card */}
+      <section>
+        <div className="container-ac py-12 md:py-16">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-14">
             <div className="md:col-span-5">
-              <h2 className="section-label mb-3">Anteprima</h2>
+              <div className="rule-thick mb-6" />
+              <h2 className="section-label mb-3">Anteprima Scheda</h2>
               <p className="text-2xl md:text-3xl font-display font-normal text-text-primary mb-4 leading-snug">
                 Ogni artista, analizzato come un asset finanziario.
               </p>
@@ -221,7 +261,7 @@ export default function HomePage() {
                   <div className="text-[11px] text-text-secondary uppercase tracking-wider mb-3">Price Index 2000–2025</div>
                   <div className="flex items-end gap-[2px] h-20">
                     {[100,92,108,172,233,322,400,267,194,289,378,472,667,583,544,611,1000,833,750,611,917,1056,944,1000,1111].map((v, i) => (
-                      <div key={i} className="flex-1 bg-text-primary" style={{ height: `${(v / 1111) * 100}%`, opacity: 0.2, borderRadius: '1px 1px 0 0' }} />
+                      <div key={i} className="flex-1 bg-text-primary" style={{ height: `${(v / 1111) * 100}%`, opacity: 0.15, borderRadius: '1px 1px 0 0' }} />
                     ))}
                   </div>
                   <div className="flex justify-between mt-2">
@@ -232,32 +272,6 @@ export default function HomePage() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Diamond separator */}
-      <div className="diamond-sep container-ac"><span /></div>
-
-      {/* Newsletter CTA */}
-      <section className="container-ac py-12 md:py-20">
-        <div className="max-w-lg mx-auto text-center">
-          <h2 className="section-label mb-4">Newsletter</h2>
-          <p className="text-2xl md:text-3xl font-display font-normal text-text-primary mb-4">Art Capital Weekly</p>
-          <p className="text-text-secondary mb-10 leading-relaxed">
-            Ogni settimana nella tua inbox: analisi di mercato, artisti sotto i riflettori, risultati d&apos;asta e opportunità.
-          </p>
-          <form className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-            <input
-              type="email"
-              placeholder="La tua email"
-              className="flex-1 border border-border px-4 py-3 text-text-primary placeholder:text-text-secondary focus:outline-none focus:border-text-primary transition-colors bg-white text-sm"
-              style={{ borderRadius: '2px' }}
-            />
-            <button type="submit" className="btn-primary whitespace-nowrap">
-              Iscriviti Gratis
-            </button>
-          </form>
-          <p className="text-text-secondary text-xs mt-4">Niente spam. Cancellati quando vuoi.</p>
         </div>
       </section>
     </main>

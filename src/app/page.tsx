@@ -1,4 +1,4 @@
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Lock, FileText, TrendingUp, BarChart3 } from 'lucide-react';
 import Link from 'next/link';
 
 // DEMO — variazioni percentuali placeholder
@@ -24,6 +24,34 @@ const topArtists = [
   { name: 'Lucio Fontana', slug: 'lucio-fontana', score: 82, change: +8.2 },
   { name: 'Adrian Ghenie', slug: 'adrian-ghenie', score: 80, change: +22.1 },
   { name: 'Maurizio Cattelan', slug: 'maurizio-cattelan', score: 78, change: +15.2 },
+];
+
+// DEMO — report/research placeholder
+const reports = [
+  {
+    tag: 'Report Trimestrale',
+    title: 'Art Market Report Q4 2024',
+    summary: 'Volume globale a $11.1B, Christie\'s domina con $4.1B. Analisi dei trend per segmento, fascia di prezzo e area geografica.',
+    date: '15 Gen 2025',
+    isPremium: false,
+    icon: BarChart3,
+  },
+  {
+    tag: 'Deep Dive',
+    title: 'Basquiat: anatomia di un mercato da $67M',
+    summary: 'Come il mercato di Basquiat si è trasformato dal 2017 ad oggi. Distribuzione per fascia, buyer profile e proiezioni.',
+    date: '28 Feb 2025',
+    isPremium: true,
+    icon: TrendingUp,
+  },
+  {
+    tag: 'Sector Report',
+    title: 'Arte Italiana Contemporanea 2025',
+    summary: 'Fontana, Cattelan, Boetti: performance a confronto. Il mercato italiano nelle aste internazionali.',
+    date: '7 Mar 2025',
+    isPremium: true,
+    icon: FileText,
+  },
 ];
 
 // DEMO — recent auction highlights placeholder
@@ -213,8 +241,67 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Artist Preview — Basquiat card */}
+      {/* Research & Reports */}
       <section>
+        <div className="container-ac py-12 md:py-16">
+          <div className="grid md:grid-cols-12 gap-0">
+
+            {/* Left: featured report */}
+            <div className="md:col-span-7 md:pr-10 lg:pr-14 md:border-r md:border-border">
+              <div className="rule-thick mb-6" />
+              <h2 className="section-label mb-6">Research &amp; Report</h2>
+              <article>
+                <div className="flex items-center gap-3 mb-3">
+                  <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">{reports[0].tag}</span>
+                  <span className="text-text-secondary text-xs">{reports[0].date}</span>
+                </div>
+                <h3 className="text-2xl md:text-3xl font-display font-normal text-text-primary mb-3 leading-snug">
+                  {reports[0].title}
+                </h3>
+                <p className="text-text-secondary leading-relaxed mb-6 max-w-lg">
+                  {reports[0].summary}
+                </p>
+                <Link href="/newsletter" className="text-sm text-text-primary font-medium hover:text-accent transition-colors inline-flex items-center gap-1.5">
+                  Leggi il report <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </article>
+            </div>
+
+            {/* Right: report list */}
+            <div className="md:col-span-5 md:pl-10 lg:pl-14 mt-10 md:mt-0">
+              <div className="rule-thick mb-6" />
+              <h2 className="section-label mb-6">Ultimi Report</h2>
+              <div className="divide-y divide-border">
+                {reports.slice(1).map((report, i) => (
+                  <article key={i} className="py-5 first:pt-0">
+                    <div className="flex items-center gap-3 mb-2">
+                      <report.icon className="w-3.5 h-3.5 text-text-secondary" />
+                      <span className="text-[11px] font-semibold uppercase tracking-wider text-accent">{report.tag}</span>
+                      {report.isPremium && (
+                        <span className="inline-flex items-center gap-1 text-[10px] px-1.5 py-0.5 font-semibold border" style={{ color: '#C9A84C', borderColor: 'rgba(201, 168, 76, 0.25)', backgroundColor: 'rgba(201, 168, 76, 0.06)', borderRadius: '2px' }}>
+                          <Lock className="w-2.5 h-2.5" /> Premium
+                        </span>
+                      )}
+                    </div>
+                    <h4 className="text-base font-display font-normal text-text-primary mb-1">{report.title}</h4>
+                    <p className="text-text-secondary text-sm leading-relaxed">{report.summary}</p>
+                    <span className="text-text-secondary text-xs mt-2 block">{report.date}</span>
+                  </article>
+                ))}
+              </div>
+              <div className="mt-5">
+                <Link href="/newsletter" className="text-sm text-text-secondary hover:text-text-primary transition-colors inline-flex items-center gap-1">
+                  Tutti i report <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Artist Preview — Basquiat card */}
+      <section className="bg-surface border-y border-border">
         <div className="container-ac py-12 md:py-16">
           <div className="grid md:grid-cols-12 gap-10 md:gap-14">
             <div className="md:col-span-5">

@@ -54,7 +54,7 @@ export default function HomePage() {
         <div className="grid md:grid-cols-12 gap-8 md:gap-12 pt-8">
 
           {/* Left column — headline + lead */}
-          <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-center">
+          <div className="md:col-span-7 lg:col-span-8 flex flex-col justify-center items-center text-center">
             <h1 className="font-display font-normal text-text-primary leading-[1.05] tracking-tight mb-6">
               <span className="block text-[4rem] md:text-[5.5rem] lg:text-[6.5rem] mb-2">Art Capital</span>
               <span className="block text-[1.25rem] md:text-[1.5rem] lg:text-[1.75rem] text-text-secondary font-light tracking-normal">Dati, analisi e indici per il mercato dell&apos;arte</span>

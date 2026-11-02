@@ -1,16 +1,0 @@
--- ============================================
--- ART CAPITAL â€” Database Schema
--- Run this in Supabase SQL Editor
--- ============================================
-
--- Enable UUID extension
-CREATE EUQpÕURQÄÁ4ÓÁÛˆQˆ“ÕVTÕÈ]ZY[ÜÜÜŽÂ‚‹KHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB‹KHT•TÕÂ‹KHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBÔ‘PUHP“H\\ÝÈ
-ˆYURQ’SPT–HÑVHQUS]ZYÙÙ[™\˜]WÝ
-
-Kˆ˜[YHV“Õ•SˆÛYÈV“Õ•SS’TUQKKHT“YœšY[™Nˆ	Ú™X[‹[ZXÚ[X˜\Ü]ZX]	Âˆ˜][Û˜[]HVˆš\ÞYX\ˆS•QÑT‹ˆX]ÞYX\ˆS•QÑT‹ˆYY][HV×HQUS	ÞßIËKHÉÔ]\˜IË	ÔØÝ[\˜I×Bˆ[Ý™[Y[V×HQUS	ÞßIËKHÉÓ™[ËQ\Ü™\ÜÚ[Ûš\Û[É×Bˆš[ÈVˆ[XYÙWÝ\›VˆÜ™X]YØ]SQTÕSTˆQUS“ÕÊ
-Kˆ\]YØ]SQTÕSTˆQUS“ÕÊ
-BŠNÂ‚Ô‘PUHS‘VYØ\\Ý×ÜÛYÈÓˆ\\ÝÊÛYÊNÂÔ‘PUHS‘VYØ\\Ý×Û˜[YHÓˆ\\ÝÈTÒS‘ÈÚ[Š×ÝÝ™XÝÜŠ	Ú][X[‰Ë˜[YJJNÂ‚‹KHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB‹KHUPÕSÓˆ‘TÕSÂ‹KHOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOBÔ‘PUHP“H]XÝ[Û—Ü™\Ý[È
-ˆYURQ’SPT–HÑVHQUS]ZYÙÙ[™\˜]WÝ
-
-Kˆ\\ÝÚYURQ“Õ•S‘Q‘T‘SÑTÈ\\ÝÊY
-HÓˆSUHÐTÐÐQKˆ]HV“Õ•SKH]ÛÈ[	ÛÜ\˜Bˆ]XÝ[Û—ÚÝ\ÙHV“Õ•SKHÚš\ÝYIÜËÛÝXžIÜË]Ë‚ˆØ[WÝ]HVKH›ÛYH[H™[™]BˆØ[WÙ]HU

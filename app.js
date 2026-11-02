@@ -13,10 +13,11 @@ const EPOCHE = [
   { id: 'q700', n: 'Settecento', da: 1700, a: 1799 },
   { id: 'q800', n: 'Ottocento', da: 1800, a: 1899 },
   { id: 'q900', n: 'Primo Novecento', da: 1900, a: 1945, nota: 'fino al 1945' },
-  { id: 'contemporaneo', n: 'Contemporaneo', da: 1946, a: 2100, nota: 'dal 1946' },
+  { id: 'contemporaneo', n: 'Secondo Novecento', da: 1946, a: 1989, nota: '1946–1989' },
+  { id: 'oggi', n: 'Oggi', da: 1990, a: 2100, nota: 'dal 1990 · sezione completa' },
 ];
 const PAESI = ['Italia', 'Fiandre', 'Olanda', 'Spagna', 'Francia', 'Germania', 'Inghilterra', 'Americhe', 'Altri paesi'];
-const PAESI_NOTE = { Fiandre: 'e Belgio', Germania: 'Austria, Svizzera', 'Altri paesi': 'Nord ed Est Europa' };
+const PAESI_NOTE = { Fiandre: 'e Belgio', Germania: 'Austria, Svizzera', 'Altri paesi': 'Nord ed Est Europa, Asia' };
 const REGIONI = ['Toscana', 'Veneto', 'Lombardia', 'Emilia', 'Italia centrale', 'Lazio', 'Sud', 'Liguria', 'Piemonte'];
 const VICINE = {
   Toscana: ['Italia centrale', 'Emilia', 'Lazio', 'Veneto'], Veneto: ['Lombardia', 'Emilia', 'Toscana', 'Lazio'],
@@ -48,9 +49,11 @@ function leggi(k, def) { try { const x = JSON.parse(localStorage.getItem(k)); re
 function salva(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* senza memoria */ } }
 const IMP_DEF = { sezione: 'libera', livello: 'medio', epoche: EPOCHE.map(e => e.id), paesi: PAESI.slice(), regioni: REGIONI.slice() };
 let imp = Object.assign({}, IMP_DEF, leggi(K_IMP, {}));
+// settings saved before «Oggi» existed: whoever had the contemporary had it all
+if (!imp.v) { if (imp.epoche.includes('contemporaneo') && !imp.epoche.includes('oggi')) imp.epoche.push('oggi'); imp.v = 2; }
 let stato = Object.assign({ pittori: {}, scuole: {}, presentati: {}, recenti: [], mestiere: {}, giorni: {}, giuste: 0, sbagliate: 0 }, leggi(K_STATO, {}));
 const oggi = () => new Date().toISOString().slice(0, 10);
-function salvaStato() { stato.recenti = stato.recenti.slice(-400); salva(K_STATO, stato); }
+function salvaStato() { stato.recenti = stato.recenti.slice(-1500); salva(K_STATO, stato); }
 
 // ---------- dati ----------
 let D = null;           // indice
@@ -71,7 +74,9 @@ async function carica() {
 }
 
 // ---------- immagini ----------
+function protetta(o) { return o.s === 'e' || (P[o.p] && P[o.p].sez === 'P'); }
 function urlImmagine(o, w = 960) {
+  if (protetta(o)) w = Math.min(w, 500);   // protected works: small, for study only
   if (o.s === 'e') return 'https://en.wikipedia.org/wiki/Special:FilePath/' + encodeURIComponent(o.f.replace(/ /g, '_')) + '?width=' + Math.min(w, 500);
   const n = encodeURIComponent(o.f.replace(/ /g, '_'));
   const tif = /\.tiff?$/i.test(o.f) ? '.jpg' : '';
@@ -79,6 +84,7 @@ function urlImmagine(o, w = 960) {
 }
 function riserve(o, w) {
   if (o.s === 'e') return [];
+  if (protetta(o)) w = Math.min(w, 500);
   const n = encodeURIComponent(o.f.replace(/ /g, '_'));
   return ['https://commons.wikimedia.org/wiki/Special:FilePath/' + n + '?width=' + w, `https://upload.wikimedia.org/wikipedia/commons/${o.h[0]}/${o.h}/${n}`];
 }
@@ -127,12 +133,12 @@ async function credito(o, el) {
 }
 
 // ---------- filtri dalle impostazioni ----------
-function paese(p) { return (S[p.s] && S[p.s].paese) || 'Italia'; }
+function paese(p) { return p.pa || (S[p.s] && S[p.s].paese) || 'Italia'; }
 function regione(p) { return S[p.s] && S[p.s].r; }
 function attivo(p) { return [p.b + 18, p.d || 2026]; }
-function nelleEpoche(p) {
-  const [a, b] = attivo(p);
-  return EPOCHE.some(e => imp.epoche.includes(e.id) && a <= e.a && b >= e.da);
+function nelleEpoche(p) {   // at least ten years of work in the epoch (or a third of a short career)
+  const [a, b] = attivo(p); const minimo = Math.min(10, (b - a) / 3);
+  return EPOCHE.some(e => imp.epoche.includes(e.id) && Math.min(b, e.a) - Math.max(a, e.da) >= minimo);
 }
 function nelLuogo(p) {
   const pa = paese(p);
@@ -145,7 +151,10 @@ let POOL = [], POOL_SET = new Set(), POOL_LARGO = [];
 function ricalcola() {
   const L = LIVELLI[imp.livello];
   POOL_LARGO = D.pittori.filter(p => (OP[p.id] || []).length && nellaSezione(p) && nelLuogo(p) && nelleEpoche(p));
-  POOL = POOL_LARGO.filter(p => L.liv.includes(p.l));
+  // the painters to ask about: at least two works (those with one stay among the options)
+  const abb = p => (OP[p.id] || []).length >= 2;
+  POOL = POOL_LARGO.filter(p => L.liv.includes(p.l) && abb(p));
+  if (POOL.length < 8) POOL = POOL_LARGO.filter(abb);
   if (POOL.length < 8) POOL = POOL_LARGO.slice();
   POOL_SET = new Set(POOL.map(p => p.id));
 }
@@ -175,14 +184,23 @@ function scegliPesato(arr, w) {
   for (const x of arr) { r -= w(x); if (r < 0) return x; }
   return arr[arr.length - 1];
 }
+const recentiP = [];   // painters of the last cards, across batches
+function fattore(p, rec) {
+  const sue = OP[p.id] || []; let f = Math.min(1, (sue.length + 2) / 12);
+  if (!sue.some(o => !rec.has(o.id) && !mostrate.has(o.id))) f *= 0.15;
+  return f;
+}
 function prossimoPittore(evita) {
   const now = Date.now();
+  const rec = new Set(stato.recenti.slice(-1200));
+  const quanti = POOL.length > 40 ? 14 : POOL.length > 15 ? 6 : POOL.length > 6 ? 2 : 0;
+  evita = new Set([...evita, ...recentiP.slice(-quanti)]);
   const dovuti = POOL.filter(p => stato.pittori[p.id] && voce(p.id).due <= now && !evita.has(p.id)).sort((a, b) => voce(a.id).due - voce(b.id).due);
   if (dovuti.length && Math.random() < 0.55) return dovuti[0].id;
   const nuovi = POOL.filter(p => !stato.pittori[p.id] && !evita.has(p.id));
   const aperti = POOL.filter(p => stato.pittori[p.id] && !evita.has(p.id));
-  if (nuovi.length && (Math.random() < 0.6 || !aperti.length)) return scegliPesato(nuovi, p => pesoLivello(p.l)).id;
-  if (aperti.length) return scegliPesato(aperti, p => 7 - voce(p.id).box).id;
+  if (nuovi.length && (Math.random() < 0.6 || !aperti.length)) return scegliPesato(nuovi, p => pesoLivello(p.l) * fattore(p, rec)).id;
+  if (aperti.length) return scegliPesato(aperti, p => (7 - voce(p.id).box) * fattore(p, rec)).id;
   const tutti = POOL.filter(p => !evita.has(p.id));
   return tutti.length ? caso(tutti).id : null;
 }
@@ -190,14 +208,22 @@ function inEpoca(o) {
   if (!o.y || imp.epoche.length === EPOCHE.length) return true;
   return EPOCHE.some(e => imp.epoche.includes(e.id) && o.y >= e.da && o.y <= e.a);
 }
-function opera(pid, lista = OP) {
-  let tutte = lista[pid] || []; if (!tutte.length) return null;
-  const qui = tutte.filter(inEpoca); if (qui.length) tutte = qui;
-  const rec = new Set(stato.recenti.slice(-300));
-  const fresche = tutte.filter(o => !rec.has(o.id));
-  if (Math.random() < 0.3) { const m = fresche.filter(o => o.mn); if (m.length) return caso(m); }
-  return caso(fresche.length ? fresche : tutte);
+const mostrate = new Set();   // works already put on a card in this session
+function segna(o) { if (o) mostrate.add(o.id); return o; }
+function opere(pid, n, lista = OP) {
+  let tutte = lista[pid] || []; if (!tutte.length) return [];
+  const qui = tutte.filter(inEpoca); if (qui.length >= Math.min(3, tutte.length)) tutte = qui;   // too few in the epoch: all of them
+  const rec = stato.recenti.slice(-1200); const pos = new Map(rec.map((id, i) => [id, i]));
+  const fresche = mescola(tutte.filter(o => !pos.has(o.id) && !mostrate.has(o.id)));
+  const minori = fresche.filter(o => o.mn);
+  let out = (Math.random() < 0.3 && minori.length) ? [minori[0], ...fresche.filter(o => o !== minori[0])] : fresche;
+  if (out.length < n) {   // all seen: the ones seen longest ago, not those of this session
+    const viste = tutte.filter(o => !out.includes(o)).sort((a, b) => (mostrate.has(a.id) - mostrate.has(b.id)) || ((pos.get(a.id) ?? -1) - (pos.get(b.id) ?? -1)));
+    out = out.concat(viste);
+  }
+  return out.slice(0, n).map(segna);
 }
+function opera(pid, lista = OP) { return opere(pid, 1, lista)[0] || null; }
 
 // ---------- opzioni ----------
 function vicino(a, b, anni) { return Math.abs(a.b - b.b) <= anni; }
@@ -243,7 +269,7 @@ function opzioniLuogo(p) {
 function secolo(y) {
   if (y < 1400) return 'Duecento e Trecento'; if (y < 1500) return 'Quattrocento'; if (y < 1600) return 'Cinquecento';
   if (y < 1700) return 'Seicento'; if (y < 1800) return 'Settecento'; if (y < 1900) return 'Ottocento'; if (y < 1946) return 'Primo Novecento';
-  return 'Contemporaneo';
+  return y < 1990 ? 'Secondo Novecento' : 'Oggi';
 }
 function anno(o) { if (o.y) return o.y; const p = P[o.p]; return Math.min(p.d || 2000, p.b + 35); }
 
@@ -253,13 +279,14 @@ const nid = k => k + (++seriale);
 function presentato(k) { return !!stato.presentati[k]; }
 
 function domanda(pid) {
-  const p = P[pid]; const o = opera(pid); if (!o) return null;
+  const p = P[pid]; if (!(OP[pid] || []).length) return null;
   const box = voce(pid).box; const dado = Math.random() * 10; const L = LIVELLI[imp.livello];
   const n = (box >= 4 || L.opz === 6) ? 5 : L.opz - 1;
   if (box >= 3 && dado < (box >= 4 ? 4.5 : 3)) { const c = avanzata(pid); if (c) return c; }
   if ((box >= 3 || imp.livello === 'esperto') && dado >= 8.5 && DET[pid] && DET[pid].length) {
     return { tipo: 'dettaglio', id: nid('d'), o: opera(pid, DET), opz: opzioniPittori(pid, n) };
   }
+  const o = opera(pid); if (!o) return null;
   if (box >= 2 && dado >= 7.6 && dado < 8.5) {
     const sec = EPOCHE.map(e => e.n); const g = secolo(anno(o)); const i = sec.indexOf(g);
     const da = Math.max(0, Math.min(sec.length - 4, i - 1 - Math.floor(Math.random() * 2)));
@@ -296,7 +323,7 @@ function intruso(pid) {
   const vic = POOL_LARGO.filter(x => x.id !== pid && (x.s === a.s || rete.has(x.id)) && Math.abs(x.b - a.b) <= 25);
   const b = vic.find(x => rete.has(x.id)) || (vic.length ? caso(vic) : null); if (!b) return null;
   const ob = opera(b.id); if (!ob) return null;
-  const tre = mescola(sue).slice(0, 3); const g = Math.floor(Math.random() * 4); tre.splice(g, 0, ob);
+  const tre = opere(pid, 3); const g = Math.floor(Math.random() * 4); tre.splice(g, 0, ob);
   return { tipo: 'intruso', id: nid('i'), opere: tre, giusta: g, p: pid };
 }
 function maestroDi(pid) {
@@ -313,9 +340,10 @@ function maestroDi(pid) {
 function confronto() {
   const aperti = POOL.filter(p => stato.pittori[p.id]); if (aperti.length < 4) return null;
   for (let t = 0; t < 12; t++) {
-    const x = caso(aperti); const altri = aperti.filter(y => y.s !== x.s && Math.abs(y.b - x.b) <= 40); if (!altri.length) continue;
-    const y = caso(altri); const a = opera(x.id), b = opera(y.id); if (!a || !b) continue;
-    const sx = S[x.s], sy = S[y.s];
+    let x = caso(aperti); const altri = aperti.filter(y => y.s !== x.s && Math.abs(y.b - x.b) <= 40); if (!altri.length) continue;
+    let y = caso(altri); let a = opera(x.id), b = opera(y.id); if (!a || !b) continue;
+    if (paese(x) === 'Altri paesi' && paese(y) !== 'Altri paesi') { const t = a; a = b; b = t; const u = x; x = y; y = u; }
+    const sx = S[x.s];
     let nome;
     if (paese(x) !== paese(y)) nome = { Italia: 'italiano', Fiandre: 'fiammingo', Olanda: 'olandese', Spagna: 'spagnolo', Francia: 'francese', Germania: 'tedesco', Inghilterra: 'inglese', Americhe: 'americano', 'Altri paesi': 'dell\'Europa del Nord o dell\'Est' }[paese(x)];
     else if (regione(x) !== regione(y) && REGIONI.includes(regione(x))) nome = { Toscana: 'toscano', Veneto: 'veneto', Lombardia: 'lombardo', Emilia: 'emiliano', 'Italia centrale': 'umbro-marchigiano', Lazio: 'romano', Sud: 'napoletano o del Sud', Liguria: 'genovese', Piemonte: 'piemontese' }[regione(x)];
@@ -348,7 +376,7 @@ function aggiungi(n) {
     if (contatore % 7 === 0) { const c = confronto(); if (c) { metti(c); continue; } }
     if (contatore % 11 === 0) { const v = valore(); if (v) { metti(v); continue; } }
     const pid = prossimoPittore(new Set([...usati, ...rinviate.map(r => r.p)])); if (!pid) break;
-    usati.add(pid);
+    usati.add(pid); recentiP.push(pid); if (recentiP.length > 40) recentiP.shift();
     const p = P[pid];
     if (LIVELLI[imp.livello].intro) {
       if (!presentato('s:' + p.s) && !inCoda.has('s:' + p.s) && carte.length + fatte.length > 1 && contatore - ultimaScuola >= 6) {
@@ -413,7 +441,7 @@ function cartaQuiz(c) {
     art.appendChild(g);
   } else if (c.tipo !== 'mestiere') {
     const f = document.createElement('div'); f.className = 'figura'; f.appendChild(img(c.o));
-    if (c.o.s === 'e') { const b = document.createElement('span'); b.className = 'protetta'; b.textContent = '© opera protetta · bassa risoluzione'; f.appendChild(b); }
+    if (protetta(c.o)) { const b = document.createElement('span'); b.className = 'protetta'; b.textContent = '© opera protetta · bassa risoluzione'; f.appendChild(b); }
     art.appendChild(f);
   }
   const dq = document.createElement('div'); dq.className = 'domanda';
@@ -499,7 +527,7 @@ function cartaPittore(c) {
   const p = P[c.p]; stato.presentati['p:' + c.p] = 1; salvaStato();
   const art = document.createElement('article'); art.className = 'card';
   const g = document.createElement('div'); g.className = 'griglia';
-  mescola(OP[c.p] || []).slice(0, 4).forEach(o => { const ce = document.createElement('div'); ce.className = 'cella'; ce.appendChild(img(o, 500)); const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = o.t; ce.appendChild(cap); g.appendChild(ce); });
+  opere(c.p, Math.min(4, Math.max(1, (OP[c.p] || []).length - 2))).forEach(o => { const ce = document.createElement('div'); ce.className = 'cella'; ce.appendChild(img(o, 500)); const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = o.t; ce.appendChild(cap); g.appendChild(ce); });
   art.appendChild(g);
   const d = document.createElement('div'); d.className = 'intro';
   d.innerHTML = `<div class="etichetta">Un pittore nuovo · ${esc(NOMI_LIV[p.l])}</div>` + bloccoPittore(p, null) + (p.chi ? `<p class="testo-lungo">${esc(p.chi)}</p>` : '') + `<p class="fonte">Tra qualche carta ti chiedo di riconoscerlo.</p>`;
@@ -510,10 +538,10 @@ function cartaScuola(c) {
   const art = document.createElement('article'); art.className = 'card';
   const g = document.createElement('div'); g.className = 'griglia';
   const ps = D.pittori.filter(p => p.s === c.s && (OP[p.id] || []).length && nellaSezione(p)).sort((a, b) => a.l - b.l).slice(0, 4);
-  ps.forEach(p => { const o = OP[p.id][0]; const ce = document.createElement('div'); ce.className = 'cella'; ce.appendChild(img(o, 500)); const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = p.n; ce.appendChild(cap); g.appendChild(ce); });
+  ps.forEach(p => { const o = opera(p.id); const ce = document.createElement('div'); ce.className = 'cella'; ce.appendChild(img(o, 500)); const cap = document.createElement('span'); cap.className = 'cap'; cap.textContent = p.n; ce.appendChild(cap); g.appendChild(ce); });
   art.appendChild(g);
   const d = document.createElement('div'); d.className = 'intro';
-  d.innerHTML = `<div class="etichetta">Una scuola · ${esc(s.paese === 'Italia' && REGIONI.includes(s.r) ? s.r : s.paese)}</div><h2>${esc(s.n)}</h2>` +
+  d.innerHTML = `<div class="etichetta">Una scuola · ${esc(s.et || (s.paese === 'Italia' && REGIONI.includes(s.r) ? s.r : s.paese))}</div><h2>${esc(s.n)}</h2>` +
     (s.sintesi ? `<p class="testo-lungo">${esc(s.sintesi)}</p>` : '') +
     (s.segni && s.segni.length ? `<div class="blocco"><div class="etichetta">Come riconoscerla</div><ul>${s.segni.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '') +
     (s.confondi ? `<div class="blocco"><div class="etichetta">Con cosa si confonde</div><p>${esc(s.confondi)}</p></div>` : '') +
@@ -549,8 +577,12 @@ function disegna(c) {
 let sentinella;
 function riempi(n = 6) {
   const nuove = aggiungi(n);
-  if (!nuove.length && !feed.querySelector('.card')) {
-    feed.innerHTML = `<div class="pagina"><h1>Nessun pittore</h1><p class="nota">Con queste impostazioni non c'è nessun pittore da mostrare. Allarga l'epoca, il luogo o la difficoltà.</p><button class="pulsante" data-vai="impostazioni">Impostazioni</button></div>`;
+  if (!nuove.length && !carte.length) {
+    if (!feed.querySelector('.vuoto')) {
+      const v = document.createElement('div'); v.className = 'pagina vuoto';
+      v.innerHTML = `<h1>Nessun pittore</h1><p class="nota">Con queste impostazioni non c'è nessun pittore da mostrare. Allarga l'epoca, il luogo o la difficoltà${imp.sezione === 'libera' ? ', o passa alla sezione con i contemporanei' : ''}.</p><button class="pulsante" data-vai="impostazioni">Impostazioni</button>`;
+      feed.insertBefore(v, sentinella); sentinella.textContent = '';
+    }
     return;
   }
   for (const c of nuove) { carte.push(c); feed.insertBefore(disegna(c), sentinella); }
@@ -594,7 +626,7 @@ function vistaImpostazioni() {
   el.innerHTML = `<div class="pagina"><h1>Impostazioni</h1>
   <div class="riepilogo" id="riepilogo"></div>
   <h2>Sezione</h2>
-  <div class="scelte blocchi">${btn('sezione', 'libera', 'Opere libere', 'Solo immagini libere da diritti, anche per usi commerciali', imp.sezione === 'libera')}${btn('sezione', 'completa', 'Completa', 'Aggiunge i contemporanei protetti (Fontana, Burri, Boetti, Picasso…), a bassa risoluzione', imp.sezione === 'completa')}</div>
+  <div class="scelte blocchi">${btn('sezione', 'libera', 'Opere libere', 'Solo immagini libere da diritti, anche per usi commerciali', imp.sezione === 'libera')}${btn('sezione', 'completa', 'Completa', 'Aggiunge i contemporanei protetti, da Picasso e Fontana agli artisti di oggi, a bassa risoluzione', imp.sezione === 'completa')}</div>
   <p class="nota">Le opere degli artisti morti dopo il 1955, o viventi, sono protette dal diritto d'autore: compaiono solo nella sezione completa, piccole e a scopo di studio.</p>
   <h2>Difficoltà</h2>
   <div class="scelte blocchi">${Object.entries(LIVELLI).map(([k, v]) => btn('livello', k, v.n, v.d, imp.livello === k)).join('')}</div>
@@ -687,7 +719,7 @@ async function vistaScheda(pid) {
 
 function vistaInfo() {
   $('#info').innerHTML = `<div class="pagina"><h1>Fonti e crediti</h1>
-  <p class="testo-lungo">Occhio è un quiz per imparare a riconoscere i pittori: un'opera alla volta, con le scuole, i maestri e i segni per distinguerli. ${D.pittori.length.toLocaleString('it-IT')} pittori, soprattutto italiani dal Duecento all'Ottocento; i maggiori stranieri e una parte del Novecento.</p>
+  <p class="testo-lungo">Occhio è un quiz per imparare a riconoscere i pittori: un'opera alla volta, con le scuole, i maestri e i segni per distinguerli. ${D.pittori.length.toLocaleString('it-IT')} pittori, soprattutto italiani dal Duecento all'Ottocento; i maggiori stranieri, il Novecento e una scelta di artisti di oggi, italiani e del mondo.</p>
   <h2>Le immagini</h2>
   <p>Le immagini della sezione «Opere libere» vengono da <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>: sono opere in pubblico dominio fotografate e pubblicate con licenze libere (pubblico dominio, CC0, CC BY, CC BY-SA), che ne permettono anche l'uso commerciale citando autore e licenza. Sotto ogni risposta c'è il credito della foto, con il link alla pagina del file.</p>
   <div class="avviso">Le opere dei musei statali italiani sono beni culturali: per riprodurle a fini di lucro il Codice dei beni culturali (artt. 107–108) chiede un'autorizzazione e un canone. L'uso per studio e senza scopo di lucro è libero.</div>

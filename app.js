@@ -457,7 +457,7 @@ function rispondi(c, i, art) {
 
 function chipsPittore(p) {
   const s = S[p.s]; const out = [`<span class="chip forte">${esc(s ? s.n : '')}</span>`];
-  if (paese(p) !== 'Italia') out.push(`<span class="chip">${esc(paese(p))}</span>`);
+  if (paese(p) !== 'Italia') { if (!s || paese(p) !== s.n) out.push(`<span class="chip">${esc(paese(p))}</span>`); }
   else if (REGIONI.includes(regione(p))) out.push(`<span class="chip">${esc(regione(p))}</span>`);
   for (const m of (p.ma || []).slice(0, 2)) if (P[m]) out.push(`<span class="chip">allievo di ${esc(P[m].n)}</span>`);
   return out.join('');

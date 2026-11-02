@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Occhio — riconoscere i pittori</title>
+<meta name="description" content="Un'opera alla volta: indovina chi l'ha dipinta e impara a riconoscere pittori, scuole e maniere, dall'arte italiana antica al Novecento.">
+<meta name="theme-color" content="#0b0b0c">
+<link rel="icon" href="icona.svg" type="image/svg+xml">
+<link rel="stylesheet" href="stile.css">
+</head>
+<body>
+<header class="testata">
+  <button class="marchio" data-vai="feed" aria-label="Torna al quiz"><span class="occhio-ico" aria-hidden="true"></span>Occhio</button>
+  <div class="conteggio" id="conteggio" aria-live="polite"></div>
+  <nav class="azioni">
+    <button data-vai="pittori" title="Pittori">Pittori</button>
+    <button data-vai="impostazioni" title="Impostazioni" class="ico-btn" aria-label="Impostazioni">
+      <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="currentColor" d="M3 6h11v2H3V6zm15 0h3v2h-3v2h-2V4h2v2zM3 16h3v-2h2v6H6v-2H3v-2zm7 0h11v2H10v-2zM3 11h7v2H3v-2zm11 0h7v2h-7v2h-2V9h2v2z"/></svg>
+    </button>
+  </nav>
+</header>
+
+<main>
+  <section id="feed" class="vista attiva" aria-label="Quiz"></section>
+  <section id="pittori" class="vista" aria-label="Pittori"></section>
+  <section id="scheda" class="vista" aria-label="Scheda del pittore"></section>
+  <section id="impostazioni" class="vista" aria-label="Impostazioni"></section>
+  <section id="info" class="vista" aria-label="Fonti e crediti"></section>
+</main>
+
+<div id="lente" class="lente" hidden><img alt=""><button class="chiudi" aria-label="Chiudi">×</button></div>
+<div id="carica" class="carica">Carico le opere…</div>
+<script src="app.js" defer></script>
+</body>
+</html>

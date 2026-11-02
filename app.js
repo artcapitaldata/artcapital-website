@@ -75,8 +75,12 @@ async function carica() {
 
 // ---------- immagini ----------
 function protetta(o) { return o.s === 'e' || (P[o.p] && P[o.p].sez === 'P'); }
+const WSRV = (u, w) => 'https://wsrv.nl/?url=' + encodeURIComponent(u) + '&w=' + w;
+const estensione = f => (f.match(/\.(jpe?g|png)$/i) || ['', 'jpg'])[1];
 function urlImmagine(o, w = 960) {
   if (protetta(o)) w = Math.min(w, 500);   // protected works: small, for study only
+  if (o.s === 'w') return o.f + '!Blog.' + estensione(o.f);            // WikiArt, 500 px
+  if (o.s === 'm') return WSRV(o.f, w);                                  // MoMA, reduced
   if (o.s === 'e') return 'https://en.wikipedia.org/wiki/Special:FilePath/' + encodeURIComponent(o.f.replace(/ /g, '_')) + '?width=' + Math.min(w, 500);
   const n = encodeURIComponent(o.f.replace(/ /g, '_'));
   const tif = /\.tiff?$/i.test(o.f) ? '.jpg' : '';
@@ -85,6 +89,8 @@ function urlImmagine(o, w = 960) {
 function riserve(o, w) {
   if (o.s === 'e') return [];
   if (protetta(o)) w = Math.min(w, 500);
+  if (o.s === 'w') return [WSRV(o.f, w), o.f + '!PinterestSmall.' + estensione(o.f)];
+  if (o.s === 'm') return [o.f];
   const n = encodeURIComponent(o.f.replace(/ /g, '_'));
   return ['https://commons.wikimedia.org/wiki/Special:FilePath/' + n + '?width=' + w, `https://upload.wikimedia.org/wikipedia/commons/${o.h[0]}/${o.h}/${n}`];
 }
@@ -111,10 +117,13 @@ $('#lente').addEventListener('click', () => { $('#lente').hidden = true; $('#len
 
 const crediti = {};
 async function credito(o, el) {
+  const diritti = "© l'artista o gli aventi diritto: solo a scopo di studio, sezione non commerciale.";
   if (o.s === 'e') {
-    el.innerHTML = `Immagine a bassa risoluzione da <a href="https://en.wikipedia.org/wiki/File:${encodeURIComponent(o.f.replace(/ /g, '_'))}" target="_blank" rel="noopener">Wikipedia</a>. © l'artista o gli aventi diritto: solo a scopo di studio, sezione non commerciale.`;
+    el.innerHTML = `Immagine a bassa risoluzione da <a href="https://en.wikipedia.org/wiki/File:${encodeURIComponent(o.f.replace(/ /g, '_'))}" target="_blank" rel="noopener">Wikipedia</a>. ${diritti}`;
     return;
   }
+  if (o.s === 'w') { el.innerHTML = `Immagine a bassa risoluzione da <a href="https://www.wikiart.org/en/${esc(o.h)}" target="_blank" rel="noopener">WikiArt</a>. ${diritti}`; return; }
+  if (o.s === 'm') { el.innerHTML = `Immagine a bassa risoluzione dalla collezione del <a href="https://www.moma.org/collection/works/${esc(o.h)}" target="_blank" rel="noopener">MoMA</a>. ${diritti}`; return; }
   const pagina = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(o.f.replace(/ /g, '_'));
   el.innerHTML = `Foto: <a href="${pagina}" target="_blank" rel="noopener">Wikimedia Commons</a>`;
   try {
@@ -212,7 +221,7 @@ const mostrate = new Set();   // works already put on a card in this session
 function segna(o) { if (o) mostrate.add(o.id); return o; }
 function opere(pid, n, lista = OP) {
   let tutte = lista[pid] || []; if (!tutte.length) return [];
-  const qui = tutte.filter(inEpoca); if (qui.length >= Math.min(3, tutte.length)) tutte = qui;   // too few in the epoch: all of them
+  const qui = tutte.filter(inEpoca); if (qui.length >= Math.min(5, tutte.length)) tutte = qui;   // too few in the epoch: all of them
   const rec = stato.recenti.slice(-1200); const pos = new Map(rec.map((id, i) => [id, i]));
   const fresche = mescola(tutte.filter(o => !pos.has(o.id) && !mostrate.has(o.id)));
   const minori = fresche.filter(o => o.mn);
@@ -723,7 +732,7 @@ function vistaInfo() {
   <h2>Le immagini</h2>
   <p>Le immagini della sezione «Opere libere» vengono da <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a>: sono opere in pubblico dominio fotografate e pubblicate con licenze libere (pubblico dominio, CC0, CC BY, CC BY-SA), che ne permettono anche l'uso commerciale citando autore e licenza. Sotto ogni risposta c'è il credito della foto, con il link alla pagina del file.</p>
   <div class="avviso">Le opere dei musei statali italiani sono beni culturali: per riprodurle a fini di lucro il Codice dei beni culturali (artt. 107–108) chiede un'autorizzazione e un canone. L'uso per studio e senza scopo di lucro è libero.</div>
-  <p>La sezione «Completa» aggiunge gli artisti protetti dal diritto d'autore (morti dopo il 1955 o viventi): le loro immagini sono a bassa risoluzione, prese da Wikipedia, mostrate solo a scopo di studio e di discussione, senza scopo di lucro (art. 70, comma 1-bis, legge 633/1941). © gli artisti e gli aventi diritto. Chi è titolare dei diritti su un'immagine e vuole che venga tolta può chiederlo al titolare del sito: verrà tolta subito.</p>
+  <p>La sezione «Completa» aggiunge gli artisti protetti dal diritto d'autore (morti dopo il 1955 o viventi): le loro immagini sono a bassa risoluzione, prese da Wikipedia, da WikiArt e dalla collezione online del MoMA, mostrate solo a scopo di studio e di discussione, senza scopo di lucro (art. 70, comma 1-bis, legge 633/1941). © gli artisti e gli aventi diritto. Chi è titolare dei diritti su un'immagine e vuole che venga tolta può chiederlo al titolare del sito: verrà tolta subito.</p>
   <h2>I testi e le attribuzioni</h2>
   <p>Le schede dei pittori si basano sul Dizionario Biografico degli Italiani (Treccani), su Wikipedia e sulla letteratura storico-artistica; i «trucchi» riportano lo studioso e la fonte. Le opere e le loro attribuzioni vengono da <a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a> e Commons, filtrate: via le opere «attribuite», di bottega, di cerchia, le collaborazioni, i file che nominano un altro artista. Qualche errore può restare: se ne trovi uno, segnalalo.</p>
   <h2>I tuoi dati</h2>

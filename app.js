@@ -69,7 +69,7 @@ async function carica() {
   D = ind;
   for (const s of D.scuole) S[s.id] = s;
   for (const p of D.pittori) P[p.id] = p;
-  const add = (arr, dest, k) => { for (const x of arr) { const o = { id: x[0], p: x[1], t: x[2], y: x[3], c: x[4], f: x[5], h: x[6], mn: x[7], s: x[8], k }; (dest[o.p] = dest[o.p] || []).push(o); } };
+  const add = (arr, dest, k) => { for (const x of arr) { const o = { id: x[0], p: x[1], t: x[2], y: x[3], c: x[4], f: x[5], h: x[6], mn: x[7], s: x[8], k, l: x[9] ? op.L[x[9] - 1] : null, ld: x[10] }; (dest[o.p] = dest[o.p] || []).push(o); } };
   add(op.o, OP, 'o'); add(op.d, DET, 'd'); add(op.g, DIS, 'g');
 }
 
@@ -110,6 +110,8 @@ function img(o, w = 960, cls = '') {
 }
 function apriLente(o) {
   const l = $('#lente'); const im = $('img', l);
+  let cap = $('.cap', l); if (!cap) { cap = document.createElement('div'); cap.className = 'cap'; l.appendChild(cap); }
+  cap.textContent = [o.t, o.y || 'senza data', o.l, o.c && o.c !== o.l ? o.c : null].filter(Boolean).join(' · ');
   im.src = urlImmagine(o, 1920); im.onerror = () => { im.onerror = null; im.src = urlImmagine(o, 960); };
   l.hidden = false;
 }
@@ -693,6 +695,15 @@ function vistaPittori() {
   mostra('');
   $('.cerca', el).addEventListener('input', e => mostra(e.target.value));
 }
+// the sheet's galleries: by date (undated at the end), each with year and place of execution
+function cronologico(a) { return (a || []).slice().sort((x, y) => (x.y || 9999) - (y.y || 9999) || String(x.t).localeCompare(String(y.t))); }
+function cellaGalleria(o) {
+  const g = document.createElement('div'); g.className = 'cg'; g.title = didascalia(o);
+  const c = document.createElement('div'); c.className = 'cella'; c.appendChild(img(o, 330)); g.appendChild(c);
+  const d = document.createElement('div'); d.className = 'dida';
+  d.innerHTML = `<b>${o.y || 's.d.'}</b>${o.l ? ' · ' + (o.ld ? `<i>${esc(o.l)}</i>` : esc(o.l)) : ''}<span>${esc(o.t)}</span>`;
+  g.appendChild(d); return g;
+}
 async function vistaScheda(pid) {
   const p = P[pid]; if (!p) return;
   const el = $('#scheda');
@@ -704,13 +715,13 @@ async function vistaScheda(pid) {
   if (p.fasi && p.fasi.length) h += `<div class="blocco"><div class="etichetta">Le fasi</div>${p.fasi.map(f => `<p><b>${f.da}–${f.a} · ${esc(f.nome)}</b><br>${esc(f.testo || '')}</p>`).join('')}</div>`;
   const rete = [...(p.ma || []).map(x => ['maestro', x]), ...(p.al || []).map(x => ['allievo', x])].filter(([, x]) => P[x]);
   if (rete.length) h += `<div class="blocco"><div class="etichetta">Maestri e allievi</div><p>${rete.map(([k, x]) => `${k} <button class="link" data-scheda="${x}">${esc(P[x].n)}</button>`).join(' · ')}</p></div>`;
-  h += `<div id="vita"></div><div class="blocco"><div class="etichetta">Opere (${(OP[pid] || []).length})</div><div class="opere-griglia" id="og"></div></div>`;
+  h += `<div id="vita"></div><div class="blocco"><div class="etichetta">Opere (${(OP[pid] || []).length}) · in ordine di data</div><p class="fonte">Sotto ogni opera l'anno e il luogo di esecuzione: in tondo quando lo dice il catalogo dell'opera, in corsivo la città dove ${esc(p.n)} lavorava quell'anno.</p><div class="opere-griglia" id="og"></div></div>`;
   if ((DIS[pid] || []).length) h += `<div class="blocco"><div class="etichetta">Disegni</div><div class="opere-griglia" id="dg"></div></div>`;
   corpo.innerHTML = h;
   const og = $('#og', corpo);
-  (OP[pid] || []).slice(0, 60).forEach(o => { const c = document.createElement('div'); c.className = 'cella'; c.title = didascalia(o); c.appendChild(img(o, 330)); og.appendChild(c); });
+  cronologico(OP[pid]).slice(0, 90).forEach(o => og.appendChild(cellaGalleria(o)));
   const dg = $('#dg', corpo);
-  if (dg) (DIS[pid] || []).slice(0, 18).forEach(o => { const c = document.createElement('div'); c.className = 'cella'; c.title = didascalia(o); c.appendChild(img(o, 330)); dg.appendChild(c); });
+  if (dg) cronologico(DIS[pid]).slice(0, 24).forEach(o => dg.appendChild(cellaGalleria(o)));
   vai('scheda', pid);
   try {
     if (!SCHEDE) SCHEDE = await fetch('data/schede.json').then(r => r.json());

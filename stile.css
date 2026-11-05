@@ -145,3 +145,10 @@ main { max-width: 620px; margin: 0 auto; padding: 0 0 80px; }
 .barra .seg button[aria-pressed="true"] { background: var(--oro); color: #111; font-weight: 600; }
 .barra .filtri { font-size: 13px; color: var(--tenue); background: var(--carta2); border: 1px solid var(--linea); border-radius: 999px; padding: 7px 12px; }
 .protetta { position: absolute; left: 8px; bottom: 8px; background: rgba(0,0,0,.7); color: var(--tenue); font-size: 11px; border-radius: 999px; padding: 3px 9px; }
+
+/* the sheet's galleries: year and place under each work */
+.opere-griglia .cg { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.opere-griglia .dida { font-size: 11.5px; line-height: 1.25; color: var(--tenue); }
+.opere-griglia .dida b { color: var(--testo); font-weight: 600; }
+.opere-griglia .dida span { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #77756f; }
+.opere-griglia { row-gap: 10px; }
